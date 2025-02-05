@@ -24,7 +24,7 @@
        @include('auth.admin.layout.sidebar')
         <div class="content">
             @include('auth.admin.layout.navbar')
-             <div class="h-100" style="background: linear-gradient(rgba(0,0,0,0.68), rgba(0,0,0,0.5)), url({{asset('assets/images/backgroundImage.jpg')}}); background-size: cover; background-position: center;">
+             <div class="min-vh-100" style="background: linear-gradient(rgba(0,0,0,0.68), rgba(0,0,0,0.5)), url({{asset('assets/images/backgroundImage.jpg')}}); background-size: cover; background-position: center;">
                  @yield('content')
              </div>
         </div>

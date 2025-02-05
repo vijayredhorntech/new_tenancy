@@ -17,7 +17,7 @@
           <table class="custom_table">
               <thead>
               <tr>
-                   <th scope="col">Sr. No</th>
+                  <th scope="col">Sr. No</th>
                   <th scope="col">Name </th>
                   <th scope="col">Email</th>
                   <th scope="col">Phone</th>

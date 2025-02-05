@@ -197,7 +197,7 @@
                     </div>
 
                     <div class="row" style="margin-top: 10px">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="domain" class="form-label" style="font-weight: 500; color: black">Domain
                                     Name</label>
@@ -207,11 +207,19 @@
                                 <div class="text-danger">{{ $message }}</div> @enderror
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="logo" class="form-label" style="font-weight: 500; color: black">Database
                                     Name</label>
                                 <input type="text" class="form-control" name="database" placeholder="Database name....">
+                                @error('logo')
+                                <div class="text-danger">{{ $message }}</div> @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="logo" class="form-label" style="font-weight: 500; color: black">Login Password</label>
+                                <input type="text" class="form-control" name="database" placeholder="klLK*(%&(5654652   ....">
                                 @error('logo')
                                 <div class="text-danger">{{ $message }}</div> @enderror
                             </div>
