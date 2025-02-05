@@ -33,19 +33,15 @@ Route::post('/login',[AuthController::class,'superadmin_login'])->name("superadm
 
 Route::group(['prefix' => 'superadmin', 'middleware' => 'auth'], function () {
     Route::get('dashboard', [AuthController::class, 'hs_dashbord'])->name('dashboard');
- 
-    
-   
-
-    
+  
 });
 
+// route agencies
 Route::group(['prefix' => 'agencies', 'middleware' => 'auth'], function () {
     Route::get('all_agencies', [AgencyController::class, 'him_agency_index'])->name('agencies');
     Route::get('create', [AgencyController::class, 'him_create_agency'])->name('create_agency');
     Route::post('store', [AgencyController::class, 'him_store_agency'])->name('agencies.store');
-    
-   
-
-    
 });
+
+// route single agency user
+Route::get('/{d}', [AgencyController::class, 'him_agencylogin']);

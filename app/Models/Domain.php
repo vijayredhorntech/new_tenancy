@@ -20,10 +20,10 @@ class Domain extends Model
     ];
 
 
-    // public function agency()
-    // {
-    //     return $this->belongsTo(Agency::class);
-    // }
+    public function agency()
+    {
+        return $this->belongsTo(Agency::class);
+    }
 
     
     // public function user()

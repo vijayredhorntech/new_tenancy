@@ -19,7 +19,8 @@ class AgencyController extends Controller
            
             $id = Auth::user()->id;
             $user = User::find($id);
-            $agency=Agency::get();
+            $agency=Agency::with('domains')->get();
+            dd($agency);
             return view('auth.admin.pages.agencies', ['user_data' => $user,'agencies'=>$agency]);
 
     }
@@ -37,6 +38,7 @@ class AgencyController extends Controller
    
     public function him_store_agency(Request $request)
                 {
+                    
                     // Validate the incoming data
                     $validated = $request->validate([
                         'name' => 'required|string|max:255',
@@ -70,20 +72,21 @@ class AgencyController extends Controller
                             'user_id' => $auth_id,  
                         ]);
                 
-                        // $full_url=env()
+                        $full_url=env('DOMAIN')."/".$domain_name;
+                   
                         // Insert into the 'domains' table
                         $domain = Domain::create([
                             'domain_name' => $request->domain, 
                             'agency_id' => $agency->id,       
                             'user_id' => $auth_id,             
-                            'full_url' => $request->database,  
+                            'full_url' => $full_url,  
                         ]);
                 
                      
                         // Create database and run migrations
                     
                         \DB::commit();
-                    DatabaseHelper::createDatabaseForUser($request->database);
+                    DatabaseHelper::createDatabaseForUser($request->database,$agency);
                         // Return success response
                         return response()->json([
                             'message' => 'Agency and domain created successfully.',
@@ -106,6 +109,12 @@ class AgencyController extends Controller
                             'error' => $e->getMessage(),
                         ], 500);
                     }
+    }
+
+
+    public function him_agencylogin($id){
+   dd("heelo");
+
     }
     
 

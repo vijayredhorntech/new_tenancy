@@ -32,9 +32,9 @@ class Agency extends Model
 
     /**get domains data***/
     
-    //    public function domains()
-    //     {
-    //         return $this->hasMany(Domain::class);
-    //     }
+       public function domains()
+        {
+            return $this->hasMany(Domain::class);
+        }
 
 }
