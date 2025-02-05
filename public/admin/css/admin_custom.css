@@ -1,0 +1,20 @@
+
+/********** KST CSS  **********/
+
+.show_table_details {
+    margin-top: 70px;
+}
+
+button.btn.btn-dark.action_button {
+    float: right;
+    /* margin-left: 85px; */
+    margin-right: 11px;
+}
+
+.button_area {
+    padding-bottom: 52px;
+}
+
+.alert{
+    display:none;
+}
