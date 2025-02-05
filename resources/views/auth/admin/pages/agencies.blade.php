@@ -27,6 +27,7 @@
 
                 </thead>
           
+          
                 <tbody >
                 @foreach($agencies as $agence)
                   <tr>  
@@ -34,6 +35,7 @@
                     <td>{{$agence->email}}</td>
                     <td>{{$agence->contact_person}}</td>
                     <td>{{$agence->phone}}</td>
+                    <td></td>
                     <td>  
                     <span class="badge rounded-pill text-bg-success">Active </span>
                 

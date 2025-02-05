@@ -20,7 +20,7 @@ class AgencyController extends Controller
             $id = Auth::user()->id;
             $user = User::find($id);
             $agency=Agency::with('domains')->get();
-            dd($agency);
+            // $domains = $agency->domains;
             return view('auth.admin.pages.agencies', ['user_data' => $user,'agencies'=>$agency]);
 
     }
