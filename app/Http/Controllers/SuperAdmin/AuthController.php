@@ -10,7 +10,7 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    
+
     public function login_form(){
         return view('auth.login');
     }
@@ -22,24 +22,23 @@ class AuthController extends Controller
             'email' => 'required|email|exists:users,email',
             'password' => 'required',
         ]);
-    
+
         // Attempt authentication
         if (Auth::attempt($request->only('email', 'password'))) {
             return redirect("/superadmin/dashboard");
-        } 
-        
+        }
+
         return redirect()->back()->with('error', 'Invalid credentials');
     }
 
 
     public function hs_dashbord(){
 
-            //   dd("heelo");
         $id = Auth::user()->id;
         $user = User::find($id);
-        
+
         return view('auth.admin.pages.index', ['user_data' => $user]);
     }
-    
+
 }
 

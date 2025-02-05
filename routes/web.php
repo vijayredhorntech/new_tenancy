@@ -33,7 +33,7 @@ Route::post('/login',[AuthController::class,'superadmin_login'])->name("superadm
 
 Route::group(['prefix' => 'superadmin', 'middleware' => 'auth'], function () {
     Route::get('dashboard', [AuthController::class, 'hs_dashbord'])->name('dashboard');
-  
+
 });
 
 // route agencies

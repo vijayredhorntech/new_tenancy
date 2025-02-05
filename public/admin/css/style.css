@@ -3,6 +3,7 @@
     --primary: rgb(0, 156, 255);
     --light: #F3F6F9;
     --dark: #191C24;
+    --success: #28a745;
 }
 
 .back-to-top {
@@ -203,6 +204,7 @@
     justify-content: center;
     background: #FFFFFF;
     border-radius: 40px;
+    border: solid 1px var(--primary);
 }
 
 .content .navbar .dropdown-toggle::after {
@@ -284,3 +286,19 @@
     background: var(--dark);
     border-color: var(--primary);
 }
+
+ input {
+     border: solid 1px var(--primary) !important;
+     border-radius: 3px !important;
+ }
+ textarea {
+     border: solid 1px var(--primary) !important;
+     border-radius: 3px !important;
+ }
+
+ select {
+        border: solid 1px var(--primary) !important;
+         background-color: white !important;
+     border-radius: 3px !important;
+ }
+

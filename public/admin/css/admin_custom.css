@@ -2,7 +2,7 @@
 /********** KST CSS  **********/
 
 .show_table_details {
-    margin-top: 70px;
+    padding:20px;
 }
 
 button.btn.btn-dark.action_button {
@@ -12,9 +12,50 @@ button.btn.btn-dark.action_button {
 }
 
 .button_area {
-    padding-bottom: 52px;
+    display: flex;
+    background-color: white;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 3px;
+    padding: 5px 20px;
+}
+.page-content {
+    background-color: white;
+    border-radius: 3px;
+    padding:20px;
+    overflow-x: auto;
+    margin-top: 20px;
+}
+.button_area  span{
+     font-size: 20px;
+    font-weight: 600;
+    color: black;
 }
 
 .alert{
     display:none;
+}
+
+.custom_table
+{
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid black;
+}
+.custom_table thead
+{
+    background-color: var(--primary);
+    color: white;
+}
+.custom_table thead th {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid black;
+}
+.custom_table tbody td {
+    padding: 5px 10px;
+    text-align: left;
+    border: 1px solid black;
+    color: black;
 }
