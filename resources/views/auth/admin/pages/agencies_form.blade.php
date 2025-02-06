@@ -8,9 +8,6 @@
     <div class="show_table_details">
         <div class="button_area">
             <span>Create New Agency</span>
-
-          
-
         </div>
         <form action="{{ route('agencies.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -20,7 +17,7 @@
             @endif
 
             @if(session('error'))
-             
+
              <div class="alert alert-danger">
                  {{ session('error') }}
              </div>

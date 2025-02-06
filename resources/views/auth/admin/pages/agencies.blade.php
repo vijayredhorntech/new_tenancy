@@ -9,13 +9,16 @@
 <div class="show_table_details">
       <div class="button_area">
           <span >Agencies</span>
-          @if(session('success'))
-                <div class="alert alert-success">{{ session('success') }}</div>
-            @endif
           <a href="{{route('create_agency')}}" >
               <button type="button" class="btn btn-success"><i class="bi bi-plus" style="font-size:20px;color:#fff" ></i> Add Agency</button>
           </a>
       </div>
+    <div style="width: 100%; padding: 10px 0px">
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+    </div>
+
       <div class="page-content">
           <table class="custom_table">
               <thead>
@@ -77,9 +80,12 @@
                           <!-- <span class="badge rounded-pill text-bg-danger">Inactive </span> -->
                       </td>
                       <td>
-                         <button class="btn btn-info" style="color: white; padding: 0px 10px; border-radius: 3px" title="Edit Agency"><i class="fa fa-pen" style="font-size: 12px"></i></button>
-                         <button class="btn btn-success" style="color: white; padding: 0px 10px; border-radius: 3px" title="View Agency"><i class="fa fa-eye" style="font-size: 12px"></i></button>
-                         <button class="btn btn-danger" style="color: white; padding: 0px 10px; border-radius: 3px" title="Delete Agency"><i class="fa fa-trash" style="font-size: 12px"></i></button>
+                      <div style="display: flex; gap: 5px">
+                          <button class="btn btn-info" style="color: white; padding: 0px 10px; border-radius: 3px" title="Edit Agency"><i class="fa fa-pen" style="font-size: 12px"></i></button>
+                          <button class="btn btn-success" style="color: white; padding: 0px 10px; border-radius: 3px" title="View Agency"><i class="fa fa-eye" style="font-size: 12px"></i></button>
+                          <button class="btn btn-danger" style="color: white; padding: 0px 10px; border-radius: 3px" title="Delete Agency"><i class="fa fa-trash" style="font-size: 12px"></i></button>
+
+                      </div>
                       </td>
                   </tr>
               @endforeach
