@@ -36,12 +36,27 @@ Route::group(['prefix' => 'superadmin', 'middleware' => 'auth'], function () {
 
 });
 
-// route agencies
+// route agencies for super admin
 Route::group(['prefix' => 'agencies', 'middleware' => 'auth'], function () {
     Route::get('all_agencies', [AgencyController::class, 'him_agency_index'])->name('agencies');
     Route::get('create', [AgencyController::class, 'him_create_agency'])->name('create_agency');
     Route::post('store', [AgencyController::class, 'him_store_agency'])->name('agencies.store');
 });
+
+
+/*** Route for agencies  admin ***/ 
+Route::group(['prefix' => 'agencies'], function () { 
+       Route::post('agencies_store', [AgencyController::class, 'him_agencies_store'])->name('agency_login');
+});
+
+Route::get('/agencies/dashboard',function (){
+        dd('this is agencies dashboard');
+});
+
+Route::get('/agencies/dashboard',[AgencyController::class, 'him_agenciesdashboard']);
+
+    /*** Route for agencies  admin ***/ 
+    // Route::post('agencies_store', [AgencyController::class, 'him_agencies_store'])->name('agency_login');
 
 // route single agency user
 Route::get('/{d}', [AgencyController::class, 'him_agencylogin']);

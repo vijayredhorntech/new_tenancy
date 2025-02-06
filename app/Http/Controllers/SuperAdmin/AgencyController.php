@@ -10,6 +10,8 @@ use App\Models\Agency;
 use App\Models\Domain;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\DatabaseHelper;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Hash;
 
 class AgencyController extends Controller
 {
@@ -20,8 +22,7 @@ class AgencyController extends Controller
             $id = Auth::user()->id;
             $user = User::find($id);
             $agency=Agency::with('domains')->get();
-            // $domains = $agency->domains;
-            return view('auth.admin.pages.agencies', ['user_data' => $user,'agencies'=>$agency]);
+                return view('auth.admin.pages.agencies', ['user_data' => $user,'agencies'=>$agency]);
 
     }
 
@@ -38,18 +39,19 @@ class AgencyController extends Controller
    
     public function him_store_agency(Request $request)
                 {
-                    
+
+                    // dd($request->all());
                     // Validate the incoming data
                     $validated = $request->validate([
                         'name' => 'required|string|max:255',
                         'email' => 'required|email|unique:agencies,email',
                         'phone' => 'required|string',
-                        'domain' => 'required|string|max:255',
-                        'database' => 'required|string|max:255',
+                        'domain' => 'required|string|max:255|unique:domains,domain_name',
+                        'database' => 'required|string|max:255|unique:agencies,database_name',
                         'contact_person' => 'nullable|string|max:255',
                         'contact_phone' => 'nullable|string|max:20',
                         'address' => 'nullable|string',
-                        'country' => 'nullable|string|max:255',
+                        'country' => 'required|string|max:255',
                     ]);
                 
                     // Get the authenticated user's ID
@@ -72,7 +74,8 @@ class AgencyController extends Controller
                             'user_id' => $auth_id,  
                         ]);
                 
-                        $full_url=env('DOMAIN')."/".$domain_name;
+                        $full_url=env('DOMAIN')."/".$request->domain;
+                
                    
                         // Insert into the 'domains' table
                         $domain = Domain::create([
@@ -87,12 +90,7 @@ class AgencyController extends Controller
                     
                         \DB::commit();
                     DatabaseHelper::createDatabaseForUser($request->database,$agency);
-                        // Return success response
-                        return response()->json([
-                            'message' => 'Agency and domain created successfully.',
-                            'agency' => $agency,
-                            'domain' => $domain,
-                        ], 200);
+                        return redirect()->route('agencies')->with('success', 'Agency and domain created successfully.');
                 
                     } catch (\Exception $e) {
                         // Rollback the transaction if anything fails
@@ -102,21 +100,78 @@ class AgencyController extends Controller
                         if (isset($agency)) {
                             $agency->delete(); // Delete agency if domain creation fails
                         }
-                
-                        // Return error response
-                        return response()->json([
-                            'message' => 'Failed to create agency and domain.',
-                            'error' => $e->getMessage(),
-                        ], 500);
+                             return redirect()->back()->withInput()->with('error', 'Failed to create agency and domain: ' . $e->getMessage());
                     }
     }
 
 
-    public function him_agencylogin($id){
-   dd("heelo");
+    public function him_agencylogin($domain)
+    {    
+        // $domain = Domain::where('domain_name', $domain)->first(); 
+        $agency = Agency::whereHas('domains', function ($query) use ($domain) {
+            $query->where('domain_name', $domain);
+        })->with('domains')->first();
 
+        if ($agency) {
+            return view('agencies.login', ['agency' => $agency]);
+        } else {
+            return redirect()->route('superadmin_login')->with('error', 'Domain not found.');
+        }
     }
     
+
+        public function him_agencies_store(Request $request){
+            
+            // Validate input
+        $validatedData = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+            'domain'=>'required',
+            'database'=>'required',
+        ]);
+
+        $databaseName = $validatedData['database'];
+
+                try {
+                // Set the dynamic connection config using the helper function
+                DatabaseHelper::setDatabaseConnection($databaseName);
+
+                    // Check if user exists in the specified database
+
+                    $user = User::on('user_database')->where('email', $validatedData['email'])->first();
+                 
+
+                    if ($user && Hash::check($validatedData['password'], $user->password)) {
+                        // Log the user in if the password matches
+                        // Store validated data in the session
+                        \session(['user_data' => $validatedData]);
+                        Auth::login($user);
+                        
+                        return redirect('/agencies/dashboard');
+                    }else{
+                         // If authentication fails
+                        
+                    return back()->withErrors(['error' => 'Invalid credentials']);
+                    }
+            
+                   
+                    
+                } catch (\Exception $e) {
+                    // Handle the error if the database doesn't exist or connection fails
+                    return back()->withErrors(['error' => 'Database does not exist or could not be connected']);
+                }
+      }
+
+
+        public function him_agenciesdashboard(){
+            $id = Auth::user()->id;
+            // dd($id); 
+            $userData = \session('user_data');
+            DatabaseHelper::setDatabaseConnection($userData['database']);
+            $user = User::on('user_database')->where('id', $id)->first();
+            dd($user);
+
+      }
 
 
 

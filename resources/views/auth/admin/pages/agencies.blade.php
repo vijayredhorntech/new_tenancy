@@ -9,6 +9,9 @@
 <div class="show_table_details">
       <div class="button_area">
           <span >Agencies</span>
+          @if(session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
           <a href="{{route('create_agency')}}" >
               <button type="button" class="btn btn-success"><i class="bi bi-plus" style="font-size:20px;color:#fff" ></i> Add Agency</button>
           </a>
@@ -47,8 +50,16 @@
                       </td>
 
                       <td>
-                          https://{{$agence->name}}.hs-group.com
-                      </td>
+                            @if($agence->domains->isNotEmpty())
+                                @foreach($agence->domains as $domain)
+                                    <a href="{{ $domain->full_url }}" target="_blank">
+                                    {{ $domain->full_url }}
+                                   </a>
+                                @endforeach
+                            @else
+                                No Domain
+                            @endif
+                        </td>
                       <td>
                           @php
                             $clients = ['10', '20', '30', '40', '50', '60', '70', '80', '90', '100'];

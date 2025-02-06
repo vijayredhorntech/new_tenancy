@@ -8,6 +8,9 @@
     <div class="show_table_details">
         <div class="button_area">
             <span>Create New Agency</span>
+
+          
+
         </div>
         <form action="{{ route('agencies.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -15,6 +18,13 @@
             @if(session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
+
+            @if(session('error'))
+             
+             <div class="alert alert-danger">
+                 {{ session('error') }}
+             </div>
+         @endif
             <div class="page-content">
                 <div class="row" style="padding: 20px 0px;">
                     <div class="col-12 text-decoration-underline">
@@ -104,20 +114,20 @@
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3">
-                                <label for="contact_person" class="form-label" style="font-weight: 500; color: black">Contact
+                                <label for="phone_number" class="form-label" style="font-weight: 500; color: black">Contact
                                     Person Number</label>
-                                <input type="text" class="form-control" name="contact_person"
-                                       value="{{ old('contact_person') }}" placeholder="0123456789.....">
-                                @error('contact_person')
+                                <input type="text" class="form-control" name="phone_number"
+                                       value="{{ old('phone_number') }}" placeholder="0123456789.....">
+                                @error('phone_number')
                                 <div class="text-danger">{{ $message }}</div> @enderror
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3">
-                                <label for="contact_person" class="form-label" style="font-weight: 500; color: black">VAT Number</label>
-                                <input type="text" class="form-control" name="contact_person"
-                                       value="{{ old('contact_person') }}" placeholder="CHS456S.....">
-                                @error('contact_person')
+                                <label for="vat_number" class="form-label" style="font-weight: 500; color: black">VAT Number</label>
+                                <input type="text" class="form-control" name="vat_number"
+                                       value="{{ old('vat_number') }}" placeholder="CHS456S.....">
+                                @error('vat_number')
                                 <div class="text-danger">{{ $message }}</div> @enderror
                             </div>
                         </div>
@@ -153,37 +163,37 @@
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3">
-                                <label for="address" class="form-label"
+                                <label for="city" class="form-label"
                                        style="font-weight: 500; color: black">City</label>
-                                <input class="form-control" name="address" rows="2" placeholder="City....."/>
+                                <input class="form-control" name="city" rows="2" placeholder="City....."/>
                                 @error('address')
                                 <div class="text-danger">{{ $message }}</div> @enderror
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3">
-                                <label for="address" class="form-label"
+                                <label for="state" class="form-label"
                                        style="font-weight: 500; color: black">State</label>
-                                <input class="form-control" name="address" rows="2" placeholder="State....."/>
+                                <input class="form-control" name="state" rows="2" placeholder="State....."/>
                                 @error('address')
                                 <div class="text-danger">{{ $message }}</div> @enderror
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3">
-                                <label for="address" class="form-label" style="font-weight: 500; color: black">Zip
+                                <label for="zipcode" class="form-label" style="font-weight: 500; color: black">Zip
                                     Code</label>
-                                <input class="form-control" name="address" rows="2" placeholder="Zip Code....."/>
+                                <input class="form-control" name="zipcode" rows="2" placeholder="Zip Code....."/>
                                 @error('address')
                                 <div class="text-danger">{{ $message }}</div> @enderror
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3">
-                                <label for="address" class="form-label"
+                                <label for="country" class="form-label"
                                        style="font-weight: 500; color: black">Country</label>
-                                <input class="form-control" name="address" rows="2" placeholder="Country....."/>
-                                @error('address')
+                                <input class="form-control" name="country" rows="2" placeholder="Country....."/>
+                                @error('country')
                                 <div class="text-danger">{{ $message }}</div> @enderror
                             </div>
                         </div>
@@ -211,15 +221,15 @@
                             <div class="mb-3">
                                 <label for="logo" class="form-label" style="font-weight: 500; color: black">Database
                                     Name</label>
-                                <input type="text" class="form-control" name="database" placeholder="Database name....">
-                                @error('logo')
+                                <input type="text" class="form-control" name="database" placeholder="Database name...." value="{{ old('domain') }}" >
+                                @error('database')
                                 <div class="text-danger">{{ $message }}</div> @enderror
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="logo" class="form-label" style="font-weight: 500; color: black">Login Password</label>
-                                <input type="text" class="form-control" name="database" placeholder="klLK*(%&(5654652   ....">
+                                <input type="text" class="form-control" name="login_password" placeholder="klLK*(%&(5654652   ....">
                                 @error('logo')
                                 <div class="text-danger">{{ $message }}</div> @enderror
                             </div>
