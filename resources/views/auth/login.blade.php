@@ -2,59 +2,49 @@
 
 @section('title', 'Sign In')
 
+
 @section('content')
-<section class="h-100 gradient-form" style="background-color: #eee;">
-    <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-xl-10">
-                <div class="card rounded-3 text-black">
-                    <div class="row g-0">
-                        <div class="col-lg-6">
-                            <div class="card-body p-md-5 mx-md-4">
-                                <div class="text-center">
-                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
-                                        style="width: 185px;" alt="logo">
-                                    <h4 class="mt-1 mb-5 pb-1">Sign In</h4>
-                                </div>
-
-                                <form action="{{ route('superadmin_login') }}" method="POST">
-                                    @csrf
-                                    <div data-mdb-input-init class="form-outline mb-4">
-                                        <input type="email" id="form2Example11" class="form-control"
-                                            placeholder="Email Address" name="email" required />
-                                        <label class="form-label" for="form2Example11">Email Address</label>
-                                            @error('email')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                             @enderror
-                                    </div>
-
-                                    <div data-mdb-input-init class="form-outline mb-4">
-                                        <input type="password" id="form2Example22" class="form-control" 
-                                            placeholder="Enter Password" name="password" required />
-                                        <label class="form-label" for="form2Example22">Enter Password</label>
-                                        @error('password')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="text-center pt-1 mb-5 pb-1">
-                                        <input type="submit" value="Login" class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
-                                        <a class="text-muted" href="#!">Forgot password?</a>
-                                    </div>
-                                </form>
-
-                            </div>
-                        </div>
-                        <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
-                            <div class="text-white px-3 py-4 p-md-5 mx-md-4">
-                                <h4 class="mb-4">Attention is the new currency</h4>
-                                <p class="small mb-0">The more effortless the writing looks, the more effort the writer actually put into the process.</p>
-                            </div>
-                        </div>
+    <div style="width: 100%; padding: 20px; height: 100vh; width: 100vw; overflow:hidden;  background: linear-gradient(rgba(0,0,0,0.68), rgba(0,0,0,0.5)), url({{asset('assets/images/backgroundImage2.jpg')}}); background-size: cover; background-position: center;">
+      <div class="row" style="min-height: 100vh">
+            <div class="col-12 h-100 loginFormLeftDiv p-12">
+                <div class="loginFormDiv" >
+                    <img src="{{asset('assets/images/logo.png')}}"  alt="Cloud Travels">
+                    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 20px">
+                        <h2 style="color: #000; font-size: 25px; font-weight: 600">Welcome to HSGroup</h2>
+                        <p style="color: #000; font-size: 15px; font-weight: 500">Sign in to continue</p>
                     </div>
+                    <form style="width: 100%" action="{{ route('superadmin_login') }}" method="POST">
+                        @csrf
+                        <div data-mdb-input-init class="form-outline mb-4">
+                            <label class="form-label" for="form2Example11">Email Address</label>
+
+                            <input type="email" id="form2Example11" class="form-control"
+                                   placeholder="Enter email address....." name="email" required />
+                            @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div data-mdb-input-init class="form-outline mb-4">
+                            <label class="form-label" for="form2Example22">Enter Password</label>
+
+                            <input type="password" id="form2Example22" class="form-control"
+                                   placeholder="Enter password....." name="password" required />
+                            @error('password')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="text-center pt-1 submitButtonDiv">
+                            <input type="submit" value="Login" class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
+                            <a class="text-muted" href="#!">Forgot password?</a>
+                        </div>
+                    </form>
+
                 </div>
             </div>
-        </div>
+
+      </div>
     </div>
-</section>
+
 @endsection
