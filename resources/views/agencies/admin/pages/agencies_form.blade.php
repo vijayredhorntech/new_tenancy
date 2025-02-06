@@ -23,7 +23,7 @@
              </div>
          @endif
             <div class="page-content">
-                <div class="row" style="padding: 5px 0px;">
+                <div class="row" style="padding: 20px 0px;">
                     <div class="col-12 text-decoration-underline">
                         <span
                             style="font-weight: 500; color: var(--primary) ; font-size: 20px">Basic Details of Agency</span>
@@ -132,7 +132,7 @@
                 </div>
             </div>
             <div class="page-content">
-                <div class="row" style="padding: 5px 0px;">
+                <div class="row" style="padding: 20px 0px;">
                     <div class="col-12 text-decoration-underline">
                         <span style="font-weight: 500; color: var(--primary) ; font-size: 20px">Address Details of Agency</span>
                     </div>
@@ -197,43 +197,8 @@
                     </div>
                 </div>
             </div>
-           <!-- Create for service -->
-
-
-           <div class="page-content">
-                <div class="row" style="padding: 5px 0px;">
-                    <div class="col-12 text-decoration-underline">
-                        <span style="font-weight: 500; color: var(--primary); font-size: 20px">Select Services</span>
-                    </div>
-
-                    <!-- Service Checkboxes -->
-                    <div class="row" style="margin-top: 10px;">
-                            @if(isset($services) && $services->isNotEmpty())
-                                @foreach($services as $service)
-                                    <div class="col-6 col-md-2">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="services[]" value="{{ $service->id }}" id="service_{{ $service->id }}">
-                                            <label class="form-check-label" for="service_{{ $service->id }}" style="font-weight: 500; color: black;">
-                                                {{ $service->name }}
-                                            </label>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            @else
-                                <div class="col-6 col-md-2">
-                                    <span style="font-weight: 500; color: var(--primary); font-size: 20px;">No service</span>
-                                </div>
-                            @endif
-                     </div>
-
-                </div>
-            </div>
- <!-- end for service  -->
-
-           
-
             <div class="page-content">
-                <div class="row" style="padding: 5px 0px;">
+                <div class="row" style="padding: 20px 0px;">
                     <div class="col-12 text-decoration-underline">
                         <span style="font-weight: 500; color: var(--primary) ; font-size: 20px">Account Details of Agency</span>
                     </div>
@@ -269,8 +234,6 @@
                     </div>
                 </div>
             </div>
-
-
             <div class="page-content">
                 <div class="row">
                     <div class="col-12">

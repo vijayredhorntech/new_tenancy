@@ -12,29 +12,20 @@
             </div>
         </div>
         <div class="navbar-nav w-100">
-            <a href="{{route('dashboard')}}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+            <a href="#" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Service</a>
                 <div class="dropdown-menu bg-transparent border-0">
-                  
-                 <!-- Code for service  -->
-                @if(isset($services) && $services->isNotEmpty())
-                                @foreach($services as $service)
-                                <a href="#" class="dropdown-item"> <i class="fa fa-plane me-2"></i> {{$service->name}} </a>
-                                @endforeach
-                    @endif
-<!--                    
+                    <a href="#" class="dropdown-item"> <i class="fa fa-plane me-2"></i> Flight </a>
                     <a href="#" class="dropdown-item"><i class="fa fa-building me-2"></i> Hotel</a>
-                    <a href="#" class="dropdown-item"><i class="fa fa-lock me-2"></i> Visa</a> -->
+                    <a href="#" class="dropdown-item"><i class="fa fa-lock me-2"></i> Visa</a>
                 </div>
             </div>
             <!-- <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i></a> -->
-            <a href="{{route('agencies')}}" class="nav-item nav-link"><i class="fa fa-building me-2"></i> Agency</a>
-            <a href="{{route('agencies')}}" class="nav-item nav-link"><i class="fa fa-users me-2"></i> Clients</a>
-            <a href="{{route('agencies')}}" class="nav-item nav-link"><i class="fa fa-lock me-2"></i> Roles</a>
-            <a href="{{route('agencies')}}" class="nav-item nav-link"><i class="fa fa-lock-open me-2"></i> Permissions</a>
-            <a href="{{route('agencies')}}" class="nav-item nav-link"><i class="fa fa-user-lock me-2"></i> Profile Settings</a>
-            <a href="{{route('superadmin_logout')}}" class="nav-item nav-link"><i class="fa fa-user"></i> Logout</a>
+            <!-- <a href="{{route('agencies')}}" class="nav-item nav-link"><i class="fa fa-building me-2"></i> Agency</a> -->
+            <a href="#" class="nav-item nav-link"><i class="fa fa-users me-2"></i> Clients</a>
+            <a href="#" class="nav-item nav-link"><i class="fa fa-user-lock me-2"></i> Profile Settings</a>
+            <a href="#" class="nav-item nav-link"><i class="fa fa-user"></i> Logout</a>
         </div>
     </nav>
 

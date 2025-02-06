@@ -29,6 +29,7 @@ Route::fallback(function() {
 
 Route::get('/login',[AuthController::class,'login_form']);
 Route::post('/login',[AuthController::class,'superadmin_login'])->name("superadmin_login");
+Route::get('/logout',[AuthController::class,'superadmin_logout'])->name("superadmin_logout");
 
 
 Route::group(['prefix' => 'superadmin', 'middleware' => 'auth'], function () {
@@ -47,13 +48,13 @@ Route::group(['prefix' => 'agencies', 'middleware' => 'auth'], function () {
 /*** Route for agencies  admin ***/ 
 Route::group(['prefix' => 'agencies'], function () { 
        Route::post('agencies_store', [AgencyController::class, 'him_agencies_store'])->name('agency_login');
+     
 });
 
-Route::get('/agencies/dashboard',function (){
-        dd('this is agencies dashboard');
-});
 
 Route::get('/agencies/dashboard',[AgencyController::class, 'him_agenciesdashboard']);
+
+
 
     /*** Route for agencies  admin ***/ 
     // Route::post('agencies_store', [AgencyController::class, 'him_agencies_store'])->name('agency_login');

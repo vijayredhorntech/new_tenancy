@@ -40,5 +40,10 @@ class AuthController extends Controller
         return view('auth.admin.pages.index', ['user_data' => $user]);
     }
 
+
+   public function superadmin_logout(){
+            Auth::logout(); 
+            return redirect('/');
+   }
 }
 

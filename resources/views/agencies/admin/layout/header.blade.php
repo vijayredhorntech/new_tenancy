@@ -11,8 +11,8 @@
     @yield('style')
 
     <!-- Favicon -->
-   @include('auth.admin.layout.link')
-  
+   @include('agencies.admin.layout.link')
+   @include('agencies.admin.layout.modal')
 </head>
 <body>
     <div class="w-100 position-relative bg-center bg-cover d-flex p-0"  >
@@ -21,9 +21,9 @@
                 <span class="sr-only">Loading...</span>
             </div>
         </div>
-       @include('auth.admin.layout.sidebar')
+       @include('agencies.admin.layout.sidebar')
         <div class="content">
-            @include('auth.admin.layout.navbar')
+            @include('agencies.admin.layout.navbar')
              <div class="min-vh-100" style="background: linear-gradient(rgba(0,0,0,0.68), rgba(0,0,0,0.5)), url({{asset('assets/images/backgroundImage.jpg')}}); background-size: cover; background-position: center;">
                  @yield('content')
              </div>
