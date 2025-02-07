@@ -30,6 +30,9 @@ Route::fallback(function() {
     return redirect('/login');
 });
 
+
+
+
 Route::get('/login',[AuthController::class,'login_form'])->name('login');
 Route::post('/login',[AuthController::class,'superadmin_login'])->name("superadmin_login");
 Route::get('/logout',[AuthController::class,'superadmin_logout'])->name("superadmin_logout");
@@ -46,8 +49,10 @@ Route::group(['prefix' => 'superadmin', 'middleware' => 'auth'], function () {
     Route::get('/staffindex',[SuperadminController::class, 'hs_staffindex'])->name('superadmin.staff');
     Route::get('/staffcreate',[SuperadminController::class, 'hs_staffcreate'])->name('superadmin_staffcreate');
     Route::post('/staffstore',[SuperadminController::class, 'hs_staffstore'])->name('superadmin_staffstore');
+    Route::get('/staffDetails',[SuperadminController::class, 'hs_staffDetails'])->name('superadmin_staffDetails');
 
-     /*** Route for Roles ***/
+
+    /*** Route for Roles ***/
     Route::get('/roleindex',[SuperadminController::class, 'hs_roleindex'])->name('superadmin.role');
     Route::get('/rolecreate',[SuperadminController::class, 'hs_rolecreate'])->name('superadmin_rolecreate');
     Route::post('/rolestore',[SuperadminController::class, 'hs_rolestore'])->name('superadmin_rolestore');
