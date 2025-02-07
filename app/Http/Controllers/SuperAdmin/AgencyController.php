@@ -13,6 +13,9 @@ use App\Helpers\DatabaseHelper;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Service;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
+use App\Models\UserServiceAssignment;
 
 
 class AgencyController extends Controller
@@ -67,21 +70,26 @@ class AgencyController extends Controller
                     \DB::beginTransaction();
 
                     // code for images
-                    // $profile=""; 
-                    // if(isset($request->logo)){
+                    $profile = "";
 
-                    //     $destinationPath = public_path('agencyprofile');
-                    //     if (!File::exists($destinationPath)) {
-                    //         File::makeDirectory($destinationPath, 0755, true, true);
-                    //     }
-                    //    $fileName = 'profile_' . auth()->id() . '_' . time() . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
-     
-                    //       // Move the uploaded file
-                    //        $file->move($destinationPath, $fileName);
-                    //        $profile=$fileName;
-                    // }
-                  
+                    if ($request->hasFile('logo')) {
+                        $file = $request->file('logo'); // Get the uploaded file
                 
+                        $destinationPath = public_path('agencies/logo/');
+                
+                        // Ensure the directory exists
+                        if (!File::exists($destinationPath)) {
+                            File::makeDirectory($destinationPath, 0755, true, true);
+                        }
+                
+                        // Generate a unique file name
+                        $fileName = 'profile_' . auth()->id() . '_' . time() . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
+                
+                        // Move the uploaded file
+                        $file->move($destinationPath, $fileName);
+                        $profile = $fileName;
+                    }
+
                     try {
                         // Insert into the 'agencies' table
                         $agency = Agency::create([
@@ -94,6 +102,7 @@ class AgencyController extends Controller
                             'address' => $request->address,
                             'country' => $request->country,
                             'user_id' => $auth_id,  
+                            'profile_picture'=>$profile,
                         ]);
                 
                         $full_url=env('DOMAIN')."/".$request->domain;
@@ -106,8 +115,21 @@ class AgencyController extends Controller
                             'user_id' => $auth_id,             
                             'full_url' => $full_url,  
                         ]);
-                
+
+                                        // Assign Services if provided
+                        if (!empty($request->services) && is_array($request->services)) {
+                            $agency_id= $agency->id;
+                            foreach ($request->services as $service_id) {
+                                $serviceassign=new UserServiceAssignment();
+                                $serviceassign->agency_id=$agency_id;
+                                $serviceassign->service_id=$service_id;
+                                $serviceassign->save(); 
+                            }
+                        }
+                                        
+           
                      
+                        
                         // Create database and run migrations
                     
                         \DB::commit();
@@ -169,7 +191,6 @@ class AgencyController extends Controller
 
                     if ($user && Hash::check($validatedData['password'], $user->password)) {
                         // Log the user in if the password matches
-                        // dd('heelo');
                         // Store validated data in the session
                         \session(['user_data' => $validatedData]);
                         Auth::login($user);

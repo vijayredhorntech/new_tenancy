@@ -224,7 +224,7 @@
                                     <span style="font-weight: 500; color: var(--primary); font-size: 20px;">No service</span>
                                 </div>
                             @endif
-                     </div>
+                        </div>
 
                 </div>
             </div>
