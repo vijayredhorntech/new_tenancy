@@ -7,7 +7,7 @@
                 <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
             </div>
             <div class="ms-3">
-                <h6 class="mb-0">{{ ucwords($user_data->name ? $user_data->name : 'Login') }}</h6>
+                <h6 class="mb-0">{{ ucwords(\Illuminate\Support\Facades\Auth::user()->name ? \Illuminate\Support\Facades\Auth::user()->name : 'Login') }}</h6>
                 <span>Dashboard</span>
             </div>
         </div>
@@ -16,7 +16,7 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Service</a>
                 <div class="dropdown-menu bg-transparent border-0">
-                  
+
                  <!-- Code for service  -->
                 @if(isset($services) && $services->isNotEmpty())
                                 @foreach($services as $service)
@@ -24,7 +24,7 @@
                                 @endforeach
                                 <a href="{{route('superadmin_service')}}" class="dropdown-item"> -- Other Service </a>
                     @endif
-<!--                    
+<!--
                     <a href="#" class="dropdown-item"><i class="fa fa-building me-2"></i> Hotel</a>
                     <a href="#" class="dropdown-item"><i class="fa fa-lock me-2"></i> Visa</a> -->
                 </div>
