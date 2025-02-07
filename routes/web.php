@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AgentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SuperAdmin\AuthController;
 use App\Http\Controllers\SuperAdmin\AgencyController;
@@ -40,19 +41,19 @@ Route::group(['prefix' => 'superadmin', 'middleware' => 'auth'], function () {
     Route::get('/serviceindex', [SuperadminserviceController::class, 'hs_serviceindex'])->name('superadmin_service');
     Route::get('/servicecreate', [SuperadminserviceController::class, 'hs_servicecreate'])->name('superadmin_servicecreate');
     Route::post('/sericestore', [SuperadminserviceController::class, 'hs_servicestore'])->name('superadmin_ servicestore');
-  
+
      /*** Route for staff ***/
-    Route::get('/staffindex',[SuperadminController::class, 'hs_staffindex'])->name('superadmin.staff'); 
-    Route::get('/staffcreate',[SuperadminController::class, 'hs_staffcreate'])->name('superadmin_staffcreate'); 
-    Route::post('/staffstore',[SuperadminController::class, 'hs_staffstore'])->name('superadmin_staffstore'); 
+    Route::get('/staffindex',[SuperadminController::class, 'hs_staffindex'])->name('superadmin.staff');
+    Route::get('/staffcreate',[SuperadminController::class, 'hs_staffcreate'])->name('superadmin_staffcreate');
+    Route::post('/staffstore',[SuperadminController::class, 'hs_staffstore'])->name('superadmin_staffstore');
 
      /*** Route for Roles ***/
-    Route::get('/roleindex',[SuperadminController::class, 'hs_roleindex'])->name('superadmin.role'); 
-    Route::get('/rolecreate',[SuperadminController::class, 'hs_rolecreate'])->name('superadmin_rolecreate'); 
-    Route::post('/rolestore',[SuperadminController::class, 'hs_rolestore'])->name('superadmin_rolestore'); 
-    
+    Route::get('/roleindex',[SuperadminController::class, 'hs_roleindex'])->name('superadmin.role');
+    Route::get('/rolecreate',[SuperadminController::class, 'hs_rolecreate'])->name('superadmin_rolecreate');
+    Route::post('/rolestore',[SuperadminController::class, 'hs_rolestore'])->name('superadmin_rolestore');
 
-   
+
+
 });
 
 // route agencies for super admin
@@ -63,18 +64,27 @@ Route::group(['prefix' => 'agencies', 'middleware' => 'auth'], function () {
 });
 
 
-/*** Route for agencies  admin ***/ 
-Route::group(['prefix' => 'agencies'], function () { 
+Route::group(['prefix' => 'agents', 'middleware' => 'auth'], function () {
+    Route::get('all_agents', [AgentController::class, 'him_agent_index'])->name('agents');
+    Route::get('create', [AgentController::class, 'him_create_agent'])->name('create_agent');
+});
+
+
+
+
+/*** Route for agencies  admin ***/
+Route::group(['prefix' => 'agencies'], function () {
        Route::post('agencies_store', [AgencyController::class, 'him_agencies_store'])->name('agency_login');
-     
+
 });
 
 
 Route::get('/agencies/dashboard',[AgencyController::class, 'him_agenciesdashboard']);
 
+    /*** Route for agencies  admin ***/
 
 
-    /*** Route for agencies  admin ***/ 
+    /*** Route for agencies  admin ***/
     // Route::post('agencies_store', [AgencyController::class, 'him_agencies_store'])->name('agency_login');
 
 // route single agency user
