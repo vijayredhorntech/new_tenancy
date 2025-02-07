@@ -21,7 +21,7 @@ use App\Models\UserServiceAssignment;
 class AgencyController extends Controller
 {
     
-    // code for all agency
+    // code for all superadmin to contenncted with agency
     public function him_agency_index(){
            
             $id = Auth::user()->id;
@@ -38,9 +38,12 @@ class AgencyController extends Controller
         $id = Auth::user()->id;
         $user = User::find($id);
         $service=Service::get();
+
+        $countries = DatabaseHelper::getCountries();
+    //   dd($countries);
         // dd($service);
 
-        return view('auth.admin.pages.agencies_form', ['user_data' => $user,'services' => $service]);
+        return view('auth.admin.pages.agencies_form', ['user_data' => $user,'services' => $service,'countries'=>$countries]);
     }
 
 
@@ -99,10 +102,10 @@ class AgencyController extends Controller
                             'database_name' => $request->database,
                             'contact_person' => $request->contact_person,
                             'contact_phone' => $request->contact_phone,
-                            'address' => $request->address,
-                            'country' => $request->country,
-                            'user_id' => $auth_id,  
-                            'profile_picture'=>$profile,
+                            'address' =>       $request->address,
+                            'country' =>       $request->country,
+                            'user_id' =>       $auth_id,  
+                            'profile_picture'=> $profile,
                         ]);
                 
                         $full_url=env('DOMAIN')."/".$request->domain;
@@ -116,8 +119,10 @@ class AgencyController extends Controller
                             'full_url' => $full_url,  
                         ]);
 
-                                        // Assign Services if provided
+
+                        // Assign Services if provided
                         if (!empty($request->services) && is_array($request->services)) {
+
                             $agency_id= $agency->id;
                             foreach ($request->services as $service_id) {
                                 $serviceassign=new UserServiceAssignment();
@@ -125,15 +130,10 @@ class AgencyController extends Controller
                                 $serviceassign->service_id=$service_id;
                                 $serviceassign->save(); 
                             }
-                        }
-                                        
-           
-                     
-                        
-                        // Create database and run migrations
-                    
+                        }     
+                        // Create database and run migrations         
                         \DB::commit();
-                    DatabaseHelper::createDatabaseForUser($request->database,$agency);
+                         DatabaseHelper::createDatabaseForUser($request->database,$agency,$profile);
                         return redirect()->route('agencies')->with('success', 'Agency and domain created successfully.');
                 
                     } catch (\Exception $e) {
@@ -149,89 +149,90 @@ class AgencyController extends Controller
     }
 
 
-    public function him_agencylogin($domain)
-    {    
-        //  dd($domain);
-        // $domain = Domain::where('domain_name', $domain)->first(); 
-        $agency = Agency::whereHas('domains', function ($query) use ($domain) {
-            $query->where('domain_name', $domain);
-        })->with('domains')->first();
 
-        // dd($agency);
-        if ($agency) {
-            return view('agencies.login', ['agency' => $agency]);
-        } else {
-            return redirect()->route('superadmin_login')->with('error', 'Domain not found.');
-        }
-    }
+    /*****  Route for agency   ***** */
+            public function him_agencylogin($domain)
+            {    
+                //  dd($domain);  
+                $agency = Agency::whereHas('domains', function ($query) use ($domain) {
+                    $query->where('domain_name', $domain);
+                })->with('domains')->first();
+                if ($agency) {
+                    return view('agencies.login', ['agency' => $agency]);
+                } else {
+                    return redirect()->route('superadmin_login')->with('error', 'Domain not found.');
+                }
+            }
     
 
-        public function him_agencies_store(Request $request){
+    /*** Function for agencies login ** */
+         public function him_agencies_store(Request $request){
             
-          
-            // Validate input
-        $validatedData = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-            'domain'=>'required',
-            'database'=>'required',
-        ]);
+                            // Validate input
+                        $validatedData = $request->validate([
+                            'email' => 'required|email',
+                            'password' => 'required',
+                            'domain'=>'required',
+                            'database'=>'required',
+                        ]);
+                        $databaseName = $validatedData['database'];
+                                try {
+                                // Set the dynamic connection config using the helper function
+                                DatabaseHelper::setDatabaseConnection($databaseName);
+
+                                    // Check if user exists in the specified database
+                                    $user = User::on('user_database')->where('email', $validatedData['email'])->first();
+                                    if ($user && Hash::check($validatedData['password'], $user->password)) {
+                                        // Log the user in if the password matches
+                                        // Store validated data in the session
+                                        \session(['user_data' => $validatedData]);
+                                        Auth::login($user);
+                                        
+                                        return redirect('/agencies/dashboard');
+                                    }else{
+                                        // If authentication fails
+                                        
+                                    return back()->withErrors(['error' => 'Invalid credentials']);
+                                    }
+             
+                                } catch (\Exception $e) {
+                                    dd($e);
+                                    // Handle the error if the database doesn't exist or connection fails
+                                    return back()->withErrors(['error' => 'Database does not exist or could not be connected']);
+                                }
+          }
+
+          /** Function for dashboard ****/
+
+                            public function him_agenciesdashboard(){
+                                $id = Auth::user()->id;
+                                // dd($id); 
+                                $userData = \session('user_data');
+                                DatabaseHelper::setDatabaseConnection($userData['database']);
+                                $user = User::on('user_database')->where('id', $id)->first();
+                                $agency_record=Agency::where('email',$user->email)->first(); 
+                                $agency = Agency::with('userAssignments.service')->find($agency_record->id);
+                                $services = $agency->userAssignments->pluck('service.name', 'service.icon');
+                                // $services = $agency->userAssignments;
+                                // dd($services);
+                                // dd($agency);
+                            
+                                return view('agencies.admin.pages.index', ['user_data' => $user,'services' => $services]);
+                        }
 
 
-        $databaseName = $validatedData['database'];
-
-                try {
-                // Set the dynamic connection config using the helper function
-                DatabaseHelper::setDatabaseConnection($databaseName);
-
-                    // Check if user exists in the specified database
-
-                    $user = User::on('user_database')->where('email', $validatedData['email'])->first();
-                 
-
-                    if ($user && Hash::check($validatedData['password'], $user->password)) {
-                        // Log the user in if the password matches
-                        // Store validated data in the session
-                        \session(['user_data' => $validatedData]);
-                        Auth::login($user);
+                        public function him_agencies_logout(){
                         
-                        return redirect('/agencies/dashboard');
-                    }else{
-                         // If authentication fails
-                        
-                    return back()->withErrors(['error' => 'Invalid credentials']);
+                            $userData = \session('user_data');
+                            dd($userData);
+                            DatabaseHelper::setDatabaseConnection($userData['database']);
+                            $user = User::on('user_database')->where('id', $id)->first();
+                            
+
+                            return view('agencies.admin.pages.index', ['user_data' => $user]);
                     }
-            
-                   
-                    
-                } catch (\Exception $e) {
-                    dd($e);
-                    // Handle the error if the database doesn't exist or connection fails
-                    return back()->withErrors(['error' => 'Database does not exist or could not be connected']);
-                }
-      }
 
 
-        public function him_agenciesdashboard(){
-            $id = Auth::user()->id;
-            // dd($id); 
-            $userData = \session('user_data');
-            DatabaseHelper::setDatabaseConnection($userData['database']);
-            $user = User::on('user_database')->where('id', $id)->first();
-           
-            return view('agencies.admin.pages.index', ['user_data' => $user]);
-      }
-
-
-      public function him_agencies_logout(){
-     
-        $userData = \session('user_data');
-        dd($userData);
-        DatabaseHelper::setDatabaseConnection($userData['database']);
-        $user = User::on('user_database')->where('id', $id)->first();
-
-        return view('agencies.admin.pages.index', ['user_data' => $user]);
-  }
 
 
 

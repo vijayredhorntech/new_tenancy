@@ -41,11 +41,17 @@ Route::group(['prefix' => 'superadmin', 'middleware' => 'auth'], function () {
     Route::get('/serviceindex', [SuperadminserviceController::class, 'hs_serviceindex'])->name('superadmin_service');
     Route::get('/servicecreate', [SuperadminserviceController::class, 'hs_servicecreate'])->name('superadmin_servicecreate');
     Route::post('/sericestore', [SuperadminserviceController::class, 'hs_servicestore'])->name('superadmin_ servicestore');
+    Route::get('/sericeupdate/{id}',[SuperadminController::class, 'hs_sericeupdate'])->name('superadmin_sericeupdate');
+    Route::delete('/sericedelete',[SuperadminController::class, 'hs_sericecreate'])->name('superadmin_sericedelete');
+
 
      /*** Route for staff ***/
     Route::get('/staffindex',[SuperadminController::class, 'hs_staffindex'])->name('superadmin.staff');
     Route::get('/staffcreate',[SuperadminController::class, 'hs_staffcreate'])->name('superadmin_staffcreate');
     Route::post('/staffstore',[SuperadminController::class, 'hs_staffstore'])->name('superadmin_staffstore');
+    Route::get('/staffupdate/{id}',[SuperadminController::class, 'hs_staff'])->name('superadmin_staffupdate');
+    Route::delete('/staffdelete',[SuperadminController::class, 'hs_staffcreate'])->name('superadmin_staffdelete');
+
 
      /*** Route for Roles ***/
     Route::get('/roleindex',[SuperadminController::class, 'hs_roleindex'])->name('superadmin.role');

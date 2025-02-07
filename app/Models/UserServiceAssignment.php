@@ -23,4 +23,10 @@ class UserServiceAssignment extends Model
     // {
     //     return $this->belongsTo(Service::class);
     // }
+
+                public function service()
+                {
+                    return $this->belongsTo(Service::class, 'service_id');
+                }
+
 }

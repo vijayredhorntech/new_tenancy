@@ -37,4 +37,9 @@ class Agency extends Model
             return $this->hasMany(Domain::class);
         }
 
+         public function userAssignments()
+            {
+                return $this->hasMany(UserServiceAssignment::class, 'agency_id');
+            }
+
 }

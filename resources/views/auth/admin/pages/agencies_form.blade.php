@@ -5,6 +5,9 @@
 
 @section('content')
 
+
+
+
     <div class="show_table_details">
         <div class="button_area">
             <span>Create New Agency</span>
@@ -74,13 +77,22 @@
                                     <div class="mb-3">
                                         <label for="contact_phone" class="form-label"
                                                style="font-weight: 500; color: black">Code</label>
-                                        <select type="text" class="form-control" name="contact_phone">
+                                               <select type="text" class="form-control" name="contact_phone">
+                                            
+                                               @foreach($countries as $country)
+                                                        <option value="{{ $country['dial_code'] }}">
+                                                            {{ $country['flag'] }} {{ $country['name'] }} ({{ $country['dial_code'] }})
+                                                        </option>
+                                                    @endforeach
+
+                                               </select>
+                                        <!-- <select type="text" class="form-control" name="contact_phone">
                                             <option value="+91">+91</option>
                                             <option value="+92">+92</option>
                                             <option value="+93">+93</option>
                                             <option value="+94">+94</option>
                                             <option value="+95">+95</option>
-                                        </select>
+                                        </select> -->
                                         @error('contact_phone')
                                         <div class="text-danger">{{ $message }}</div> @enderror
                                     </div>

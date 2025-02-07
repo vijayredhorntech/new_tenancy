@@ -7,9 +7,11 @@ use Illuminate\Support\Facades\Hash;
 
 class DatabaseHelper
 {
-    public static function createDatabaseForUser($databaseName,$agency)
+    public static function createDatabaseForUser($databaseName,$agency,$profile)
+
     {
         
+      
      /**
      * Create a new database for the user.
      */
@@ -23,7 +25,8 @@ class DatabaseHelper
         DB::connection('tenant')->table('users')->insert([
             'name' => $agency->name,
             'email' => $agency->email,
-            'password' => Hash::make('admin@1232'), // You can use a default password or pass one as a parameter
+            'password' => Hash::make($agency->email),
+            'profile'=>$profile,
         ]);
     
     }
@@ -41,6 +44,35 @@ class DatabaseHelper
             'password' => env('DB_PASSWORD'),
         ]]);
     }
+
+
+    /*** Flag of **** */
+
+
+
+    public static function getCountries()
+    {
+        return [
+            ['code' => 'US', 'name' => 'United States', 'dial_code' => '+1', 'flag' => '🇺🇸'],
+            ['code' => 'IN', 'name' => 'India', 'dial_code' => '+91', 'flag' => '🇮🇳'],
+            ['code' => 'GB', 'name' => 'United Kingdom', 'dial_code' => '+44', 'flag' => '🇬🇧'],
+            ['code' => 'DE', 'name' => 'Germany', 'dial_code' => '+49', 'flag' => '🇩🇪'],
+            ['code' => 'FR', 'name' => 'France', 'dial_code' => '+33', 'flag' => '🇫🇷'],
+            ['code' => 'AU', 'name' => 'Australia', 'dial_code' => '+61', 'flag' => '🇦🇺'],
+            ['code' => 'CA', 'name' => 'Canada', 'dial_code' => '+1', 'flag' => '🇨🇦'],
+            ['code' => 'BR', 'name' => 'Brazil', 'dial_code' => '+55', 'flag' => '🇧🇷'],
+            ['code' => 'ZA', 'name' => 'South Africa', 'dial_code' => '+27', 'flag' => '🇿🇦'],
+            ['code' => 'JP', 'name' => 'Japan', 'dial_code' => '+81', 'flag' => '🇯🇵'],
+            ['code' => 'CN', 'name' => 'China', 'dial_code' => '+86', 'flag' => '🇨🇳'],
+            ['code' => 'RU', 'name' => 'Russia', 'dial_code' => '+7', 'flag' => '🇷🇺'],
+            ['code' => 'IT', 'name' => 'Italy', 'dial_code' => '+39', 'flag' => '🇮🇹'],
+            ['code' => 'ES', 'name' => 'Spain', 'dial_code' => '+34', 'flag' => '🇪🇸'],
+            ['code' => 'MX', 'name' => 'Mexico', 'dial_code' => '+52', 'flag' => '🇲🇽'],
+        ];
+    }
+
+
+
   
 }
 

@@ -3,7 +3,7 @@
     <nav class="navbar bg-light navbar-light d-flex">
         <div class="d-flex align-items-center ms-4 mb-4">
             <div class="position-relative">
-                <img class="rounded-circle" src="{{asset('assets/images/logo.png')}}" alt="" style="width: 50px; height: 50px; object-fit: cover">
+                <img class="rounded-circle" src="{{asset($user_data->profile ? 'agencies/logo/' . $user_data->profile : 'assets/images/logo.png') }}" alt="" style="width: 50px; height: 50px; object-fit: cover">
                 <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
             </div>
             <div class="ms-3">
@@ -16,9 +16,15 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Service</a>
                 <div class="dropdown-menu bg-transparent border-0">
-                    <a href="#" class="dropdown-item"> <i class="fa fa-plane me-2"></i> Flight </a>
-                    <a href="#" class="dropdown-item"><i class="fa fa-building me-2"></i> Hotel</a>
-                    <a href="#" class="dropdown-item"><i class="fa fa-lock me-2"></i> Visa</a>
+
+                       <!-- Code for service  -->
+                @if(isset($services) && $services->isNotEmpty())
+                                @foreach($services as $icon => $service)
+
+                                <a href="#" class="dropdown-item"> {!! $icon !!} {{$service}} </a>
+                                @endforeach
+                             
+                    @endif
                 </div>
             </div>
             <!-- <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i></a> -->

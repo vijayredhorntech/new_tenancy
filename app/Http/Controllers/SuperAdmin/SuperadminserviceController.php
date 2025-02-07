@@ -44,11 +44,13 @@ class SuperadminserviceController extends Controller
                 $service->description = $request->description;
 
                 if ($service->save()) {
-                    return redirect()->route('superadmin_service')->with('success', 'Service created successfully.');
+                    return redirect()->route('superadmin.staff')->with('success', 'Service created successfully.');
                 } else {
                     return redirect()->route('superadmin_servicecreate')->with('error', 'Failed to create service.');
                 }
             }
+
+          
 
 }
 
