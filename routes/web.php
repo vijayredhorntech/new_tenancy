@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AgentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SuperAdmin\AuthController;
 use App\Http\Controllers\SuperAdmin\AgencyController;
@@ -44,8 +45,16 @@ Route::group(['prefix' => 'agencies', 'middleware' => 'auth'], function () {
 });
 
 
-/*** Route for agencies  admin ***/ 
-Route::group(['prefix' => 'agencies'], function () { 
+Route::group(['prefix' => 'agents', 'middleware' => 'auth'], function () {
+    Route::get('all_agents', [AgentController::class, 'him_agent_index'])->name('agents');
+    Route::get('create', [AgentController::class, 'him_create_agent'])->name('create_agent');
+});
+
+
+
+
+/*** Route for agencies  admin ***/
+Route::group(['prefix' => 'agencies'], function () {
        Route::post('agencies_store', [AgencyController::class, 'him_agencies_store'])->name('agency_login');
 });
 
@@ -55,7 +64,7 @@ Route::get('/agencies/dashboard',function (){
 
 Route::get('/agencies/dashboard',[AgencyController::class, 'him_agenciesdashboard']);
 
-    /*** Route for agencies  admin ***/ 
+    /*** Route for agencies  admin ***/
     // Route::post('agencies_store', [AgencyController::class, 'him_agencies_store'])->name('agency_login');
 
 // route single agency user
