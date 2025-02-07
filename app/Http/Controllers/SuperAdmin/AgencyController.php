@@ -129,11 +129,13 @@ class AgencyController extends Controller
 
     public function him_agencylogin($domain)
     {    
+        //  dd($domain);
         // $domain = Domain::where('domain_name', $domain)->first(); 
         $agency = Agency::whereHas('domains', function ($query) use ($domain) {
             $query->where('domain_name', $domain);
         })->with('domains')->first();
 
+        // dd($agency);
         if ($agency) {
             return view('agencies.login', ['agency' => $agency]);
         } else {
@@ -144,7 +146,7 @@ class AgencyController extends Controller
 
         public function him_agencies_store(Request $request){
             
-            // dd($request->all());
+          
             // Validate input
         $validatedData = $request->validate([
             'email' => 'required|email',
@@ -182,6 +184,7 @@ class AgencyController extends Controller
                    
                     
                 } catch (\Exception $e) {
+                    dd($e);
                     // Handle the error if the database doesn't exist or connection fails
                     return back()->withErrors(['error' => 'Database does not exist or could not be connected']);
                 }

@@ -20,8 +20,9 @@
                  <!-- Code for service  -->
                 @if(isset($services) && $services->isNotEmpty())
                                 @foreach($services as $service)
-                                <a href="#" class="dropdown-item"> <i class="fa fa-plane me-2"></i> {{$service->name}} </a>
+                                <a href="#" class="dropdown-item"> {!! $service->icon !!} {{$service->name}} </a>
                                 @endforeach
+                                <a href="{{route('superadmin_service')}}" class="dropdown-item"> -- Other Service </a>
                     @endif
 <!--                    
                     <a href="#" class="dropdown-item"><i class="fa fa-building me-2"></i> Hotel</a>
@@ -30,10 +31,10 @@
             </div>
             <!-- <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i></a> -->
             <a href="{{route('agencies')}}" class="nav-item nav-link"><i class="fa fa-building me-2"></i> Agency</a>
-            <a href="{{route('agencies')}}" class="nav-item nav-link"><i class="fa fa-users me-2"></i> Clients</a>
-            <a href="{{route('agencies')}}" class="nav-item nav-link"><i class="fa fa-lock me-2"></i> Roles</a>
+            <a href="{{route('superadmin.staff')}}" class="nav-item nav-link"><i class="fa fa-users me-2"></i> Staff</a>
+            <a href="{{route('superadmin.role')}}" class="nav-item nav-link"><i class="fa fa-lock me-2"></i> Roles</a>
             <a href="{{route('agencies')}}" class="nav-item nav-link"><i class="fa fa-lock-open me-2"></i> Permissions</a>
-            <a href="{{route('agencies')}}" class="nav-item nav-link"><i class="fa fa-user-lock me-2"></i> Profile Settings</a>
+            <a href="{{route('agencies')}}" class="nav-item nav-link"><i class="fa fa-user-lock me-2"></i> Admin Settings</a>
             <a href="{{route('superadmin_logout')}}" class="nav-item nav-link"><i class="fa fa-user"></i> Logout</a>
         </div>
     </nav>

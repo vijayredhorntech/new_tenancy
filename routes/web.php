@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SuperAdmin\AuthController;
 use App\Http\Controllers\SuperAdmin\AgencyController;
+use App\Http\Controllers\SuperAdmin\SuperadminserviceController;
+use App\Http\Controllers\SuperAdmin\SuperadminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,14 +29,30 @@ Route::fallback(function() {
     return redirect('/login');
 });
 
-Route::get('/login',[AuthController::class,'login_form']);
+Route::get('/login',[AuthController::class,'login_form'])->name('login');
 Route::post('/login',[AuthController::class,'superadmin_login'])->name("superadmin_login");
 Route::get('/logout',[AuthController::class,'superadmin_logout'])->name("superadmin_logout");
 
 
 Route::group(['prefix' => 'superadmin', 'middleware' => 'auth'], function () {
     Route::get('dashboard', [AuthController::class, 'hs_dashbord'])->name('dashboard');
+    /*** Route for staff ***/
+    Route::get('/serviceindex', [SuperadminserviceController::class, 'hs_serviceindex'])->name('superadmin_service');
+    Route::get('/servicecreate', [SuperadminserviceController::class, 'hs_servicecreate'])->name('superadmin_servicecreate');
+    Route::post('/sericestore', [SuperadminserviceController::class, 'hs_servicestore'])->name('superadmin_ servicestore');
+  
+     /*** Route for staff ***/
+    Route::get('/staffindex',[SuperadminController::class, 'hs_staffindex'])->name('superadmin.staff'); 
+    Route::get('/staffcreate',[SuperadminController::class, 'hs_staffcreate'])->name('superadmin_staffcreate'); 
+    Route::post('/staffstore',[SuperadminController::class, 'hs_staffstore'])->name('superadmin_staffstore'); 
 
+     /*** Route for Roles ***/
+    Route::get('/roleindex',[SuperadminController::class, 'hs_roleindex'])->name('superadmin.role'); 
+    Route::get('/rolecreate',[SuperadminController::class, 'hs_rolecreate'])->name('superadmin_rolecreate'); 
+    Route::post('/rolestore',[SuperadminController::class, 'hs_rolestore'])->name('superadmin_rolestore'); 
+    
+
+   
 });
 
 // route agencies for super admin
