@@ -1,15 +1,15 @@
 @extends('auth.admin.layout.header')
 @section('title')
-    Create Agency
+    Create Member
 @stop
 
 @section('content')
 
     <div class="show_table_details">
         <div class="button_area">
-            <span>Create New Agency</span>
+            <span>Create New Member</span>
         </div>
-        <form action="{{ route('agencies.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('superadmin_staffstore') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             @if(session('success'))
@@ -26,12 +26,12 @@
                 <div class="row" style="padding: 5px 0px;">
                     <div class="col-12 text-decoration-underline">
                         <span
-                            style="font-weight: 500; color: var(--primary) ; font-size: 20px">Basic Details of Agency</span>
+                            style="font-weight: 500; color: var(--primary) ; font-size: 20px">Basic Details of Member</span>
                     </div>
                     <div class="row" style="margin-top: 10px">
                         <div class="col-md-3">
                             <div class="mb-3">
-                                <label for="logo" class="form-label" style="font-weight: 500; color: black">Agency
+                                <label for="logo" class="form-label" style="font-weight: 500; color: black">Member
                                     Photo</label>
                                 <input type="file" class="form-control" name="logo">
                                 @error('logo')
@@ -40,10 +40,10 @@
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3">
-                                <label for="name" class="form-label" style="font-weight: 500; color: black">Agency
+                                <label for="name" class="form-label" style="font-weight: 500; color: black">Member
                                     Name</label>
                                 <input type="text" class="form-control" name="name" value="{{ old('name') }}"
-                                       placeholder="Enter agency name.....">
+                                       placeholder="Enter Member name.....">
                                 @error('name')
                                 <div class="text-danger">{{ $message }}</div> @enderror
                             </div>
@@ -53,21 +53,12 @@
                                 <label for="email" class="form-label"
                                        style="font-weight: 500; color: black">Email</label>
                                 <input type="email" class="form-control" name="email" value="{{ old('email') }}"
-                                       placeholder="agencyemail@gmail.com.....">
+                                       placeholder="Memberemail@gmail.com.....">
                                 @error('email')
                                 <div class="text-danger">{{ $message }}</div> @enderror
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="mb-3">
-                                <label for="phone" class="form-label" style="font-weight: 500; color: black">Phone
-                                    Number</label>
-                                <input type="text" class="form-control" name="phone" value="{{ old('phone') }}"
-                                       placeholder="01781 200705.....">
-                                @error('phone')
-                                <div class="text-danger">{{ $message }}</div> @enderror
-                            </div>
-                        </div>
+       
                         <div class="col-md-3">
                             <div class="row">
                                 <div class="col-3">
@@ -99,42 +90,15 @@
                             </div>
 
                         </div>
-                        <div class="col-md-3">
-                            <div class="mb-3">
-                                <label for="contact_person" class="form-label" style="font-weight: 500; color: black">Contact
-                                    Person</label>
-                                <input type="text" class="form-control" name="contact_person"
-                                       value="{{ old('contact_person') }}" placeholder="Contact person name.....">
-                                @error('contact_person')
-                                <div class="text-danger">{{ $message }}</div> @enderror
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="mb-3">
-                                <label for="phone_number" class="form-label" style="font-weight: 500; color: black">Contact
-                                    Person Number</label>
-                                <input type="text" class="form-control" name="phone_number"
-                                       value="{{ old('phone_number') }}" placeholder="0123456789.....">
-                                @error('phone_number')
-                                <div class="text-danger">{{ $message }}</div> @enderror
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="mb-3">
-                                <label for="vat_number" class="form-label" style="font-weight: 500; color: black">VAT Number</label>
-                                <input type="text" class="form-control" name="vat_number"
-                                       value="{{ old('vat_number') }}" placeholder="CHS456S.....">
-                                @error('vat_number')
-                                <div class="text-danger">{{ $message }}</div> @enderror
-                            </div>
-                        </div>
+ 
+       
                     </div>
                 </div>
             </div>
             <div class="page-content">
                 <div class="row" style="padding: 5px 0px;">
                     <div class="col-12 text-decoration-underline">
-                        <span style="font-weight: 500; color: var(--primary) ; font-size: 20px">Address Details of Agency</span>
+                        <span style="font-weight: 500; color: var(--primary) ; font-size: 20px">Address Details of Member</span>
                     </div>
 
                     <div class="row" style="margin-top: 10px">
@@ -203,20 +167,18 @@
            <div class="page-content">
                 <div class="row" style="padding: 5px 0px;">
                     <div class="col-12 text-decoration-underline">
-                        <span style="font-weight: 500; color: var(--primary); font-size: 20px">Select Services</span>
+                        <span style="font-weight: 500; color: var(--primary); font-size: 20px">Select Role</span>
                     </div>
 
-                    <!-- Service Checkboxes -->
-                    <div class="row" style="margin-top: 10px;">
+                    <!--  -->
+                    <!-- <div class="row" style="margin-top: 10px;">
                             @if(isset($services) && $services->isNotEmpty())
                                 @foreach($services as $service)
                                     <div class="col-6 col-md-2">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="services[]" value="{{ $service->id }}" id="service_{{ $service->id }}">
-                                            <label class="form-check-label" for="service_{{ $service->id }}" style="font-weight: 500; color: black;">
-                                                {{ $service->name }}
-                                            </label>
-                                        </div>
+                                        <input type="checkbox" class="btn-check" name="services[]" value="{{ $service->id }}" id="service_{{ $service->id }}" autocomplete="off">
+                                        <label class="btn btn-outline-primary w-100" for="service_{{ $service->id }}" style="font-weight: 500;">
+                                            {{ $service->name }}
+                                        </label>
                                     </div>
                                 @endforeach
                             @else
@@ -224,58 +186,39 @@
                                     <span style="font-weight: 500; color: var(--primary); font-size: 20px;">No service</span>
                                 </div>
                             @endif
-                     </div>
+                     </div> -->
 
-                </div>
+                     <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="serviceDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                Select Role
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="serviceDropdown" style="width: 200px; max-height: 250px; overflow-y: auto;">
+                                @if(isset($services) && $services->isNotEmpty())
+                                    @foreach($services as $service)
+                                        <li>
+                                            <label class="dropdown-item">
+                                                <input type="checkbox" name="services[]" value="{{ $service->id }}"> {{ $service->name }}
+                                            </label>
+                                        </li>
+                                    @endforeach
+                                @else
+                                    <li><span class="dropdown-item text-muted">No service</span></li>
+                                @endif
+                            </ul>
+                   </div>
             </div>
+        </div> 
  <!-- end for service  -->
 
            
 
-            <div class="page-content">
-                <div class="row" style="padding: 5px 0px;">
-                    <div class="col-12 text-decoration-underline">
-                        <span style="font-weight: 500; color: var(--primary) ; font-size: 20px">Account Details of Agency</span>
-                    </div>
-
-                    <div class="row" style="margin-top: 10px">
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <label for="domain" class="form-label" style="font-weight: 500; color: black">Domain
-                                    Name</label>
-                                <input type="text" class="form-control" name="domain" value="{{ old('domain') }}"
-                                       placeholder="https://agency/dashboard.com">
-                                @error('domain')
-                                <div class="text-danger">{{ $message }}</div> @enderror
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <label for="logo" class="form-label" style="font-weight: 500; color: black">Database
-                                    Name</label>
-                                <input type="text" class="form-control" name="database" placeholder="Database name...." value="{{ old('domain') }}" >
-                                @error('database')
-                                <div class="text-danger">{{ $message }}</div> @enderror
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <label for="logo" class="form-label" style="font-weight: 500; color: black">Login Password</label>
-                                <input type="text" class="form-control" name="login_password" placeholder="klLK*(%&(5654652   ....">
-                                @error('logo')
-                                <div class="text-danger">{{ $message }}</div> @enderror
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+          
 
             <div class="page-content">
                 <div class="row">
                     <div class="col-12">
                         <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary px-5">Create Agency</button>
+                            <button type="submit" class="btn btn-primary px-5">Create Member</button>
                         </div>
                     </div>
 

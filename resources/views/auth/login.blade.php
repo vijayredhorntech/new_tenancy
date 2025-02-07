@@ -10,7 +10,7 @@
                 <div class="loginFormDiv" >
                     <img src="{{asset('assets/images/logo.png')}}"  alt="Cloud Travels">
                     <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 20px">
-                        <h2 style="color: #000; font-size: 25px; font-weight: 600">Welcome to HSGroup</h2>
+                        <h2 style="color: #000; font-size: 25px; font-weight: 600">Welcome to Him soft</h2>
                         <p style="color: #000; font-size: 15px; font-weight: 500">Sign in to continue</p>
                     </div>
                     <form style="width: 100%" action="{{ route('superadmin_login') }}" method="POST">

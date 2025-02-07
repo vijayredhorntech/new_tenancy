@@ -22,7 +22,7 @@ button.btn.btn-dark.action_button {
 .page-content {
     background-color: white;
     border-radius: 3px;
-    padding:20px;
+    padding:5px 20px;
     overflow-x: auto;
     margin-top: 20px;
 }

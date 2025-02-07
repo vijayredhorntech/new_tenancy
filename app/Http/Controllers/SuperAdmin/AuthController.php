@@ -6,15 +6,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\AuthocheckHelper;
 use App\Models\User;
+use App\Models\Service;
 
 class AuthController extends Controller
 {
-
+  
     public function login_form(){
+        
+//   $id = "/superadmin/dashboard";
+        // AuthocheckHelper::logincheck();
         return view('auth.login');
     }
-    // function for login
+    // function for loginm 
     public function superadmin_login(Request $request)
     {
         // Validate input
@@ -36,9 +41,16 @@ class AuthController extends Controller
 
         $id = Auth::user()->id;
         $user = User::find($id);
+        $service=Service::get();
+        // dd($service);
 
-        return view('auth.admin.pages.index', ['user_data' => $user]);
+        return view('auth.admin.pages.index', ['user_data' => $user,'services' => $service]);
     }
 
+
+   public function superadmin_logout(){
+            Auth::logout(); 
+            return redirect('/');
+   }
 }
 

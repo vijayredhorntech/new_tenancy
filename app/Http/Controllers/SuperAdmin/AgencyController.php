@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\DB;
 use App\Helpers\DatabaseHelper;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Service;
+
 
 class AgencyController extends Controller
 {
@@ -22,7 +24,8 @@ class AgencyController extends Controller
             $id = Auth::user()->id;
             $user = User::find($id);
             $agency=Agency::with('domains')->get();
-                return view('auth.admin.pages.agencies', ['user_data' => $user,'agencies'=>$agency]);
+            $service=Service::get();
+                return view('auth.admin.pages.agencies', ['user_data' => $user,'agencies'=>$agency,'services' => $service]);
 
     }
 
@@ -31,7 +34,10 @@ class AgencyController extends Controller
     public function him_create_agency(){
         $id = Auth::user()->id;
         $user = User::find($id);
-        return view('auth.admin.pages.agencies_form', ['user_data' => $user]);
+        $service=Service::get();
+        // dd($service);
+
+        return view('auth.admin.pages.agencies_form', ['user_data' => $user,'services' => $service]);
     }
 
 
@@ -59,6 +65,22 @@ class AgencyController extends Controller
                 
                     // Start a transaction
                     \DB::beginTransaction();
+
+                    // code for images
+                    // $profile=""; 
+                    // if(isset($request->logo)){
+
+                    //     $destinationPath = public_path('agencyprofile');
+                    //     if (!File::exists($destinationPath)) {
+                    //         File::makeDirectory($destinationPath, 0755, true, true);
+                    //     }
+                    //    $fileName = 'profile_' . auth()->id() . '_' . time() . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
+     
+                    //       // Move the uploaded file
+                    //        $file->move($destinationPath, $fileName);
+                    //        $profile=$fileName;
+                    // }
+                  
                 
                     try {
                         // Insert into the 'agencies' table
@@ -107,11 +129,13 @@ class AgencyController extends Controller
 
     public function him_agencylogin($domain)
     {    
+        //  dd($domain);
         // $domain = Domain::where('domain_name', $domain)->first(); 
         $agency = Agency::whereHas('domains', function ($query) use ($domain) {
             $query->where('domain_name', $domain);
         })->with('domains')->first();
 
+        // dd($agency);
         if ($agency) {
             return view('agencies.login', ['agency' => $agency]);
         } else {
@@ -122,6 +146,7 @@ class AgencyController extends Controller
 
         public function him_agencies_store(Request $request){
             
+          
             // Validate input
         $validatedData = $request->validate([
             'email' => 'required|email',
@@ -129,6 +154,7 @@ class AgencyController extends Controller
             'domain'=>'required',
             'database'=>'required',
         ]);
+
 
         $databaseName = $validatedData['database'];
 
@@ -143,6 +169,7 @@ class AgencyController extends Controller
 
                     if ($user && Hash::check($validatedData['password'], $user->password)) {
                         // Log the user in if the password matches
+                        // dd('heelo');
                         // Store validated data in the session
                         \session(['user_data' => $validatedData]);
                         Auth::login($user);
@@ -157,6 +184,7 @@ class AgencyController extends Controller
                    
                     
                 } catch (\Exception $e) {
+                    dd($e);
                     // Handle the error if the database doesn't exist or connection fails
                     return back()->withErrors(['error' => 'Database does not exist or could not be connected']);
                 }
@@ -169,9 +197,20 @@ class AgencyController extends Controller
             $userData = \session('user_data');
             DatabaseHelper::setDatabaseConnection($userData['database']);
             $user = User::on('user_database')->where('id', $id)->first();
-            dd($user);
-
+           
+            return view('agencies.admin.pages.index', ['user_data' => $user]);
       }
+
+
+      public function him_agencies_logout(){
+     
+        $userData = \session('user_data');
+        dd($userData);
+        DatabaseHelper::setDatabaseConnection($userData['database']);
+        $user = User::on('user_database')->where('id', $id)->first();
+
+        return view('agencies.admin.pages.index', ['user_data' => $user]);
+  }
 
 
 
