@@ -42,53 +42,68 @@ Route::get('/logout',[AuthController::class,'superadmin_logout'])->name("superad
 
 
 Route::group(['prefix' => 'superadmin', 'middleware' => 'auth'], function () {
-    Route::get('dashboard', [AuthController::class, 'hs_dashbord'])->name('dashboard');
-    /*** Route for staff ***/
-    Route::get('/serviceindex', [SuperadminserviceController::class, 'hs_serviceindex'])->name('superadmin_service');
-    Route::get('/servicecreate', [SuperadminserviceController::class, 'hs_servicecreate'])->name('superadmin_servicecreate');
-    Route::post('/sericestore', [SuperadminserviceController::class, 'hs_servicestore'])->name('superadmin_ servicestore');
-    Route::get('/serviceupdate/{id}', [SuperadminserviceController::class, 'hs_serviceupdate'])->name('superadmin_serviceupdate'); // Corrected spelling & added {id}
-    Route::get('/servicedelete/{id}', [SuperadminserviceController::class, 'hs_servicedelete'])->name('superadmin_servicedelete'); 
+       Route::get('dashboard', [AuthController::class, 'hs_dashbord'])->name('dashboard');
 
-
-     /*** Route for staff ***/
-    Route::get('/staffindex',[SuperadminController::class, 'hs_staffindex'])->name('superadmin.staff');
-    Route::get('/staffcreate',[SuperadminController::class, 'hs_staffcreate'])->name('superadmin_staffcreate');
-    Route::post('/staffstore',[SuperadminController::class, 'hs_staffstore'])->name('superadmin_staffstore');
-    Route::get('/staffupdate/{id}',[SuperadminController::class, 'hs_staff'])->name('superadmin_staffupdate');
-    Route::delete('/staffdelete',[SuperadminController::class, 'hs_staffcreate'])->name('superadmin_staffdelete');
-    Route::get('/staffDetails',[SuperadminController::class, 'hs_staffDetails'])->name('superadmin_staffDetails');
-
-
-    /*** Route for Roles ***/
-    Route::get('/roleindex',[RoleController::class, 'hs_roleindex'])->name('superadmin.role');
-    Route::get('/rolecreate',[RoleController::class, 'hs_rolecreate'])->name('superadmin_rolecreate');
-    Route::post('/rolestore',[RoleController::class, 'hs_rolestore'])->name('superadmin_rolestore');
-    Route::get('/roledelete/{id}',[RoleController::class, 'hs_roledelete'])->name('superadmin_roledelete');
-
-
-   /*** Route for permissions ***/
-    Route::get('/permission',[PermissionController::class, 'hs_permissionindex'])->name('superadmin.permission');
-    Route::get('/permissioncreate',[PermissionController::class, 'hs_permissioncreate'])->name('superadmin_permissioncreate');
-    Route::post('/permissionstore',[PermissionController::class, 'hs_permissionstore'])->name('superadmin_permissionstore');
-    Route::get('/permissiondelete/{id}',[PermissionController::class, 'hs_permissiondelete'])->name('superadmin_permissiondelete');
+        /*** Service Routes ***/
+        Route::controller(SuperadminserviceController::class)->group(function () {
+            Route::get('/serviceindex', 'hs_serviceindex')->name('superadmin_service');
+            Route::post('/sericestore', 'hs_servicestore')->name('superadmin_ servicestore'); // Fixed extra space in name
+            Route::get('/servicecreate', 'hs_servicecreate')->middleware('can:service create')->name('superadmin_servicecreate');
+            Route::get('/serviceupdate/{id}', 'hs_serviceupdate')->middleware('can:service update')->name('superadmin_serviceupdate');
+            Route::get('/servicedelete/{id}', 'hs_servicedelete')->middleware('can:service delete')->name('superadmin_servicedelete');
+        });
 
 
 
+        /*** Route for staff ***/
+        Route::controller(SuperadminController::class)->group(function () {
+            Route::get('/staffindex', 'hs_staffindex')->middleware('can:staff view')->name('superadmin.staff');
+            Route::get('/staffcreate', 'hs_staffcreate')->middleware('can:staff create')->name('superadmin_staffcreate');
+            Route::post('/staffstore', 'hs_staffstore')->name('superadmin_staffstore');
+            Route::get('/staffupdate/{id}', 'hs_staff')->middleware('can:staff update')->name('superadmin_staffupdate');
+            Route::delete('/staffdelete', 'hs_staffdelete')->middleware('can:staff delete')->name('superadmin_staffdelete'); // Fixed incorrect controller method
+            Route::get('/staffDetails', 'hs_staffDetails')->middleware('can:view staffdetails')->name('superadmin_staffDetails');
+        });
+
+        /*** Route for Roles ***/
+        Route::controller(RoleController::class)->group(function () {
+            Route::get('/roleindex', 'hs_roleindex')->middleware('can:role view')->name('superadmin.role');
+            Route::get('/rolecreate', 'hs_rolecreate')->middleware('can:role create')->name('superadmin_rolecreate');
+            Route::post('/rolestore', 'hs_rolestore')->name('superadmin_rolestore');
+            Route::get('/roledelete/{id}', 'hs_roledelete')->middleware('can:staff view')->name('superadmin_roledelete');
+            Route::get('/permissionassign/{id}', 'hs_permissionassign')->middleware('can:role delete')->name('superadmin_permissionassign');
+            Route::post('/permissionassign', 'hs_permissioned')->name('superadmin_assignpermission');
+        });
+    
+ 
+        /*** Route for permissions ***/
+        Route::controller(PermissionController::class)->group(function () {
+            Route::get('/permission', 'hs_permissionindex')->middleware('can:permission view')->name('superadmin.permission');
+            Route::get('/permissioncreate', 'hs_permissioncreate')->middleware('can:permission create')->name('superadmin_permissioncreate');
+            Route::post('/permissionstore', 'hs_permissionstore')->name('superadmin_permissionstore');
+            Route::get('/permissiondelete/{id}', 'hs_permissiondelete')->middleware('can:permission delete')->name('superadmin_permissiondelete');
+        });
 });
+
+/*
+*end gourp route super admin
+*/ 
 
 // route agencies for super admin
 Route::group(['prefix' => 'agencies', 'middleware' => 'auth'], function () {
-    Route::get('all_agencies', [AgencyController::class, 'him_agency_index'])->name('agencies');
-    Route::get('create', [AgencyController::class, 'him_create_agency'])->name('create_agency');
-    Route::post('store', [AgencyController::class, 'him_store_agency'])->name('agencies.store');
+     Route::controller(AgencyController::class)->group(function () {
+        Route::get('all_agencies', 'him_agency_index')->middleware('can:agency view')->name('agencies');
+        Route::get('create', 'him_create_agency')->middleware('can:agency create')->name('create_agency');
+        Route::post('store', 'him_store_agency')->name('agencies.store');
+    });
 });
 
 
-Route::group(['prefix' => 'agents', 'middleware' => 'auth'], function () {
-    Route::get('all_agents', [AgentController::class, 'him_agent_index'])->name('agents');
-    Route::get('create', [AgentController::class, 'him_create_agent'])->name('create_agent');
-});
+
+// Route::group(['prefix' => 'agents', 'middleware' => 'auth'], function () {
+//     Route::get('all_agents', [AgentController::class, 'him_agent_index'])->name('agents');
+//     Route::get('create', [AgentController::class, 'him_create_agent'])->name('create_agent');
+// });
 
 
 
@@ -96,6 +111,7 @@ Route::group(['prefix' => 'agents', 'middleware' => 'auth'], function () {
 /*** Route for agencies  admin ***/
 Route::group(['prefix' => 'agencies'], function () {
        Route::post('agencies_store', [AgencyController::class, 'him_agencies_store'])->name('agency_login');
+    //    Route::get('dashboard', [AgencyController::class, 'him_agencies_store'])->name('agency_dashboard');
 
 });
 

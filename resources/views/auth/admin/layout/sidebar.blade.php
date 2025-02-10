@@ -24,16 +24,26 @@
                                 @endforeach
                                 <a href="{{route('superadmin_service')}}" class="dropdown-item"> -- Other Service </a>
                     @endif
-<!--
-                    <a href="#" class="dropdown-item"><i class="fa fa-building me-2"></i> Hotel</a>
-                    <a href="#" class="dropdown-item"><i class="fa fa-lock me-2"></i> Visa</a> -->
                 </div>
             </div>
-            <!-- <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i></a> -->
-            <a href="{{route('agencies')}}" class="nav-item nav-link"><i class="fa fa-building me-2"></i> Agency</a>
-            <a href="{{route('superadmin.staff')}}" class="nav-item nav-link"><i class="fa fa-users me-2"></i> Staff</a>
-            <a href="{{route('superadmin.role')}}" class="nav-item nav-link"><i class="fa fa-lock me-2"></i> Roles</a>
-            <a href="{{route('superadmin.permission')}}" class="nav-item nav-link"><i class="fa fa-lock-open me-2"></i> Permissions</a>
+            <!-- check permission and create navbar -->
+            @php
+            $menuItems = [
+                ['route' => 'agencies', 'icon' => 'fa-building', 'text' => 'Agency', 'permissions' => ['agency view', 'manage everything']],
+                ['route' => 'superadmin.staff', 'icon' => 'fa-users', 'text' => 'Staff', 'permissions' => ['staff view', 'manage everything']],
+                ['route' => 'superadmin.role', 'icon' => 'fa-lock', 'text' => 'Roles', 'permissions' => ['role view', 'manage everything']],
+                ['route' => 'superadmin.permission', 'icon' => 'fa-lock-open', 'text' => 'Permissions', 'permissions' => ['permission view', 'manage everything']],
+            ];
+        @endphp
+
+        @foreach($menuItems as $item)
+            @canany($item['permissions'])
+                <a href="{{ route($item['route']) }}" class="nav-item nav-link">
+                    <i class="fa {{ $item['icon'] }} me-2"></i> {{ $item['text'] }}
+                </a>
+            @endcan
+        @endforeach
+
             <a href="{{route('agencies')}}" class="nav-item nav-link"><i class="fa fa-user-lock me-2"></i> Admin Settings</a>
             <a href="{{route('superadmin_logout')}}" class="nav-item nav-link"><i class="fa fa-user"></i> Logout</a>
         </div>

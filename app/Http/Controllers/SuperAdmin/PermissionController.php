@@ -20,7 +20,8 @@ class PermissionController extends Controller
     public function hs_permissionindex(){
         $id = Auth::user()->id;
         $user = User::find($id);
-        $permissions = Permission::all();
+        // $permissions = Permission::all();
+        $permissions = Permission::paginate(10);
         $service=Service::get();
         return view('auth.admin.pages.permission.permission', ['user_data' => $user,'services' => $service,'permissions'=>$permissions]);
     }

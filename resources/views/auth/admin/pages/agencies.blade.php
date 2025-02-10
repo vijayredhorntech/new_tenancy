@@ -9,9 +9,11 @@
 <div class="show_table_details">
       <div class="button_area">
           <span >Agencies</span>
+          @canany(['agency create', 'manage everything'])
           <a href="{{route('create_agency')}}" >
               <button type="button" class="btn btn-success"><i class="bi bi-plus" style="font-size:20px;color:#fff" ></i> Add Agency</button>
           </a>
+          @endcanany
       </div>
     <div style="width: 100%; padding: 10px 0px">
         @if(session('success'))
@@ -55,9 +57,9 @@
                       <td>
                             @if($agence->domains->isNotEmpty())
                                 @foreach($agence->domains as $domain)
-                                    <a href="{{ $domain->full_url }}" target="_blank">
+                                
                                     {{ $domain->full_url }}
-                                   </a>
+                                   
                                 @endforeach
                             @else
                                 No Domain
@@ -81,10 +83,13 @@
                       </td>
                       <td>
                       <div style="display: flex; gap: 5px">
-                         <a href=""> <button class="btn btn-info" style="color: white; padding: 0px 10px; border-radius: 3px" title="Edit Agency"><i class="fa fa-pen" style="font-size: 12px"></i></button> </ad>
-                          <button class="btn btn-success" style="color: white; padding: 0px 10px; border-radius: 3px" title="View Agency"><i class="fa fa-eye" style="font-size: 12px"></i></button>
-                          <button class="btn btn-danger" style="color: white; padding: 0px 10px; border-radius: 3px" title="Delete Agency"><i class="fa fa-trash" style="font-size: 12px"></i></button>
-
+                        @canany(['agency update', 'manage everything'])
+                            <a href=""> <button class="btn btn-info" style="color: white; padding: 0px 10px; border-radius: 3px" title="Edit Agency"><i class="fa fa-pen" style="font-size: 12px"></i></button> </a>
+                        @endcanany 
+                        <button class="btn btn-success" style="color: white; padding: 0px 10px; border-radius: 3px" title="View Agency"><i class="fa fa-eye" style="font-size: 12px"></i></button>
+                        @canany(['agency delete', 'manage everything'])
+                        <button class="btn btn-danger" style="color: white; padding: 0px 10px; border-radius: 3px" title="Delete Agency"><i class="fa fa-trash" style="font-size: 12px"></i></button>
+                        @endcanany 
                       </div>
                       </td>
                   </tr>

@@ -189,6 +189,8 @@ class AgencyController extends Controller
                                         Auth::login($user);
                                         
                                         return redirect('/agencies/dashboard');
+                                        // return redirect()->route('agency_dashboard');
+                                        
                                     }else{
                                         // If authentication fails
                                         

@@ -19,13 +19,15 @@
 
     <div class="page-content" style="background-color: transparent; margin-top: 5px">
         <div class="row">
-              <div class="col-md-8 col-12" style="padding: 0px; padding-right: 10px; padding-bottom: 10px">
+              <div class="col-md-12 col-12" style="padding: 0px; padding-right: 10px; padding-bottom: 10px">
                   <div style="background-color: white; padding: 10px; border-radius: 5px; overflow-x: auto" >
                       <div class="button_area" style="padding: 0px; padding-bottom: 5px">
                           <span >Roles</span>
+                         @canany(['role create', 'manage everything'])   
                           <a href="{{route('superadmin_rolecreate')}}" >
                               <button type="button" class="btn btn-success" style="padding: 2px 5px"><i class="bi bi-plus" style="font-size:20px;color:#fff" ></i> Add Role</button>
                           </a>
+                        @endcanany 
                       </div>
                       <table class="custom_table">
                           <thead>
@@ -47,19 +49,26 @@
                                   <td>{{$loop->iteration}}</td>
                                   <td style="font-weight: 500">{{$role->name}}</td>
                                   <td>
-                                      <button class="btn btn-success" style="color: white; padding: 0px 10px; border-radius: 3px" title="View Agency">4 <i class="fa fa-lock-open" style="font-size: 12px; margin-left: 10px"></i></button>
-                                      {{--                                  <button class="btn btn-danger" style="color: white; padding: 0px 10px; border-radius: 3px" title="View Agency">0 <i class="fa fa-lock" style="font-size: 12px; margin-left: 10px"></i></button>--}}
-                                  </td>
+                                      <button class="btn btn-success" style="color: white; padding: 0px 10px; border-radius: 3px" title="View Agency">{{$role->permissions->count()}}  <i class="fa fa-lock-open" style="font-size: 12px; margin-left: 10px"></i></button>
+                                      
+                                    </td>
                                   <td>
                                       <span class="badge rounded-pill text-bg-success">Active </span>
                                       <!-- <span class="badge rounded-pill text-bg-danger">Inactive </span> -->
                                   </td>
                                   <td>
                                       <div style="display: flex; gap: 5px">
+                                    @canany(['role update', 'manage everything'])  
                                         <a href="#">  <button class="btn btn-info" style="color: white; padding: 0px 10px; border-radius: 3px" title="Edit Agency"><i class="fa fa-pen" style="font-size: 12px"></i></button></a>
+                                     @endcanany 
+                                    @canany(['role delete', 'manage everything'])  
                                         <a href="{{ route('superadmin_roledelete', ['id' => $role->id]) }}">  <button class="btn btn-danger" style="color: white; padding: 0px 10px; border-radius: 3px" title="Delete Agency"><i class="fa fa-trash" style="font-size: 12px"></i></button></a>
-
-                                      </div>
+                                    @endcanany  
+                                    @canany(['assign permission', 'manage everything'])  
+                                        <a href="{{ route('superadmin_permissionassign', ['id' => $role->id]) }}"> <button class="btn btn-success" style="color: white; padding: 0px 10px; border-radius: 3px" title="Add Permission"><i class="fa fa-lock-open" style="font-size: 12px"></i></button>
+                                         </a>
+                                    @endcanany   
+                                        </div>
                                   </td>
                               </tr>
                           @endforeach
@@ -67,7 +76,7 @@
                       </table>
                   </div>
               </div>
-            <div class="col-md-4 col-12" style="padding: 0px">
+            <!-- <div class="col-md-4 col-12" style="padding: 0px">
                 <div style="background-color: white; padding: 10px; border-radius: 5px">
                     <div class="button_area" style="padding: 0px; padding-bottom: 5px">
                         <span >Permissions</span>
@@ -110,7 +119,7 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div> -->
         </div>
       </div>
 </div>

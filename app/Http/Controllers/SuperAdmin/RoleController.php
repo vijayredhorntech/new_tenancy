@@ -56,5 +56,51 @@ class RoleController extends Controller
         return redirect()->back()->with('success', 'Role deleted successfully');
     }
 
+      /*** Assign Permission ***/
+     
+      public function hs_permissionassign($id)
+      {
+    
+          $user = User::findOrFail(Auth::id());
+          $role = Role::findOrFail($id);
+          $permissions = Permission::all();
+        // $permissions = Permission::paginate(10);
+      
+          // Get active permissions assigned to this role
+          $active_permissions = $role->permissions->pluck('name');
+      
+          // Get all services (if needed)
+          $services = Service::all();
+      
+          // Pass data to Blade view
+          return view('auth.admin.pages.Roles.role_permissionedit', [
+              'user_data' => $user,
+              'services' => $services,
+              'roles' => $role,
+              'permissions' => $permissions,
+              'active_permissions' => $active_permissions, // Fixed variable name
+          ]);
+      }
+      
+
+    /*** Assigend permssion ***/
+
+    public function hs_permissioned(Request $request){
+     
+        $request->validate([
+            'role_name' => 'required|string|exists:roles,name',
+            'permissions' => 'array',
+        ]);
+    
+        // Find the role by name
+        $role = Role::where('name', $request->role_name)->firstOrFail();
+    
+        // Assign permissions to the role
+        $role->syncPermissions($request->permissions);
+    
+        // return back()->with('success', 'Permissions Test!');
+        return redirect()->route('superadmin.role')->with('success', 'Permissions assigned successfully!');
+    }
+
 
 }

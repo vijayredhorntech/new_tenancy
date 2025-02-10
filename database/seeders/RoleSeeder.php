@@ -19,11 +19,38 @@ class RoleSeeder extends Seeder
             // Define Permissions
             $permissions = [
                 'manage everything', // Super Admin full access
-                'manage users',
-                'create posts',
-                'edit posts',
-                'delete posts',
-                'publish posts',
+            
+                // Service Permissions
+                'service view',
+                'service create',
+                'service update',
+                'service delete',
+            
+                // Agency Permissions
+                'agency view',
+                'agency create',
+                'agency update',
+                'agency delete',
+            
+                // Staff Permissions
+                'staff view',
+                'staff create',
+                'staff update',
+                'staff delete',
+            
+                // Role Permissions
+                'role view',
+                'role create',
+                'role update',
+                'role delete',
+            
+                // Permission Management
+                'permission view',
+                'permission create',
+                'permission update',
+                'permission delete',
+                       
+                // Reports
                 'view reports'
             ];
 
@@ -39,8 +66,8 @@ class RoleSeeder extends Seeder
 
             // Assign Permissions to Roles
             $superAdmin->syncPermissions(Permission::all()); // Full access to Super Admin
-            $admin->syncPermissions(['manage users', 'create posts', 'edit posts', 'delete posts', 'publish posts']);
-            $agency->syncPermissions(['create posts', 'edit posts', 'publish posts']);
+            $admin->syncPermissions();
+            $agency->syncPermissions();
 
             // Assign Super Admin Role to Default User (Optional)
             $defaultUser = User::find(1); // Change the ID if needed

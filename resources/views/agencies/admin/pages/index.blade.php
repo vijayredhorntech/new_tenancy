@@ -14,7 +14,7 @@
                     <i class="fa fa-chart-line fa-3x text-primary"></i>
                     <div class="ms-3">
                         <p class="mb-2">Today Sale</p>
-                        <h6 class="mb-0">$123456WWgi</h6>
+                        <h6 class="mb-0">£12345</h6>
                     </div>
                 </div>
             </div>
@@ -23,7 +23,7 @@
                     <i class="fa fa-chart-bar fa-3x text-primary"></i>
                     <div class="ms-3">
                         <p class="mb-2">Total Sale</p>
-                        <h6 class="mb-0">$1234</h6>
+                        <h6 class="mb-0">£1234</h6>
                     </div>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                     <i class="fa fa-chart-area fa-3x text-primary"></i>
                     <div class="ms-3">
                         <p class="mb-2">Today Revenue</p>
-                        <h6 class="mb-0">$1234</h6>
+                        <h6 class="mb-0">£1234</h6>
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                     <i class="fa fa-chart-pie fa-3x text-primary"></i>
                     <div class="ms-3">
                         <p class="mb-2">Total Revenue </p>
-                        <h6 class="mb-0">$1234</h6>
+                        <h6 class="mb-0">£1234</h6>
                     </div>
                 </div>
             </div>
@@ -102,7 +102,7 @@
                             <td>01 Jan 2045</td>
                             <td>INV-0123</td>
                             <td>Jhon Doe</td>
-                            <td>$123</td>
+                            <td>£123</td>
                             <td>Paid</td>
                             <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
                         </tr>
@@ -111,7 +111,7 @@
                             <td>01 Jan 2045</td>
                             <td>INV-0123</td>
                             <td>Jhon Doe</td>
-                            <td>$123</td>
+                            <td>£123</td>
                             <td>Paid</td>
                             <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
                         </tr>
@@ -120,7 +120,7 @@
                             <td>01 Jan 2045</td>
                             <td>INV-0123</td>
                             <td>Jhon Doe</td>
-                            <td>$123</td>
+                            <td>£123</td>
                             <td>Paid</td>
                             <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
                         </tr>
@@ -129,7 +129,7 @@
                             <td>01 Jan 2045</td>
                             <td>INV-0123</td>
                             <td>Jhon Doe</td>
-                            <td>$123</td>
+                            <td>£123</td>
                             <td>Paid</td>
                             <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
                         </tr>
@@ -138,7 +138,7 @@
                             <td>01 Jan 2045</td>
                             <td>INV-0123</td>
                             <td>Jhon Doe</td>
-                            <td>$123</td>
+                            <td>£123</td>
                             <td>Paid</td>
                             <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
                         </tr>
