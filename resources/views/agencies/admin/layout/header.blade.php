@@ -12,7 +12,7 @@
 
     <!-- Favicon -->
    @include('agencies.admin.layout.link')
-   @include('agencies.admin.layout.modal')
+
 </head>
 <body>
     <div class="w-100 position-relative bg-center bg-cover d-flex p-0"  >

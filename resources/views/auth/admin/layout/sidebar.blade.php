@@ -3,7 +3,7 @@
     <nav class="navbar bg-light navbar-light d-flex">
         <div class="d-flex align-items-center ms-4 mb-4">
             <div class="position-relative">
-                <img class="rounded-circle" src="{{asset('assets/images/logo.png')}}" alt="" style="width: 50px; height: 50px; object-fit: cover">
+                <img class="rounded-circle" src="{{asset($user_data->profile ? 'images/user/profile/' . $user_data->profile : 'assets/images/logo.png') }}" alt="" style="width: 50px; height: 50px; object-fit: cover">
                 <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
             </div>
             <div class="ms-3">

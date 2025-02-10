@@ -9,7 +9,7 @@
 <div class="show_table_details">
       <div class="button_area">
           <span >Staff</span>
-          @canany(['staff create', 'manage all'])
+          @canany(['staff create', 'manage everything'])
           <a href="{{route('superadmin_staffcreate')}}" >
               <button type="button" class="btn btn-success"><i class="bi bi-plus" style="font-size:20px;color:#fff" ></i> Add Staff</button>
           </a>
@@ -55,14 +55,18 @@
                       </td>
                       <td>
                       <div style="display: flex; gap: 5px">
-                          @canany(['staff update', 'manage all'])
+                          @canany(['staff update', 'manage everything'])
+                          <a href="{{route('superadmin_staffupdate',['id' => $user->id])}}">
                           <button class="btn btn-info" style="color: white; padding: 0px 10px; border-radius: 3px" title="Edit Agency"><i class="fa fa-pen" style="font-size: 12px"></i></button>
+                          </a>
                           @endcanany
-                          @canany(['view staffdetails', 'manage all'])
+                          @canany(['view staffdetails', 'manage everything'])
                           <a href="{{route('superadmin_staffDetails')}}" class="btn btn-success" style="color: white; padding: 0px 10px; border-radius: 3px" title="View Agency"><i class="fa fa-eye" style="font-size: 12px"></i></a>
                           @endcanany
-                          @canany(['staff delete', 'manage all'])
-                          <button class="btn btn-danger" style="color: white; padding: 0px 10px; border-radius: 3px" title="Delete Agency"><i class="fa fa-trash" style="font-size: 12px"></i></button>
+                          @canany(['staff delete', 'manage everything'])
+                          <a href="{{route('superadmin_staffdelete',['id' => $user->id])}}">
+                            <button class="btn btn-danger" style="color: white; padding: 0px 10px; border-radius: 3px" title="Delete Agency"><i class="fa fa-trash" style="font-size: 12px"></i></button>
+                          </a> 
                           @endcanany    
                       </div>
                       </td>

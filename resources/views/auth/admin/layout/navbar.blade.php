@@ -33,7 +33,7 @@
         </div>
         <div class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                <img class="rounded-circle me-lg-2" src="{{asset('assets/images/logo.png')}}" alt="" style="width: 40px; height: 40px; object-fit: cover">
+                <img class="rounded-circle me-lg-2" src="{{asset($user_data->profile ? 'images/user/profile/' . $user_data->profile : 'assets/images/logo.png') }}" alt="" style="width: 40px; height: 40px; object-fit: cover">
                 <span class="d-none d-lg-inline-flex">{{ ucwords(\Illuminate\Support\Facades\Auth::user()->name ? \Illuminate\Support\Facades\Auth::user()->name : 'Login')}}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">

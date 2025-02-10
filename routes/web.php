@@ -60,10 +60,11 @@ Route::group(['prefix' => 'superadmin', 'middleware' => 'auth'], function () {
             Route::get('/staffindex', 'hs_staffindex')->middleware('can:staff view')->name('superadmin.staff');
             Route::get('/staffcreate', 'hs_staffcreate')->middleware('can:staff create')->name('superadmin_staffcreate');
             Route::post('/staffstore', 'hs_staffstore')->name('superadmin_staffstore');
-            Route::get('/staffupdate/{id}', 'hs_staff')->middleware('can:staff update')->name('superadmin_staffupdate');
-            Route::delete('/staffdelete', 'hs_staffdelete')->middleware('can:staff delete')->name('superadmin_staffdelete'); // Fixed incorrect controller method
-            Route::get('/staffDetails', 'hs_staffDetails')->middleware('can:view staffdetails')->name('superadmin_staffDetails');
+            Route::get('/staffupdate/{id}', 'hs_staffupdate')->middleware('can:staff update')->name('superadmin_staffupdate');
+            Route::get('/staffdelete/{id}', 'hs_staffdelete')->middleware('can:staff delete')->name('superadmin_staffdelete'); // Fixed incorrect controller method
+            Route::get('/staffDetails', 'hs_staffDetails')->middleware('can:view staffdetails')->name('superadmin_staffDetails');          
         });
+
 
         /*** Route for Roles ***/
         Route::controller(RoleController::class)->group(function () {
@@ -95,16 +96,9 @@ Route::group(['prefix' => 'agencies', 'middleware' => 'auth'], function () {
         Route::get('all_agencies', 'him_agency_index')->middleware('can:agency view')->name('agencies');
         Route::get('create', 'him_create_agency')->middleware('can:agency create')->name('create_agency');
         Route::post('store', 'him_store_agency')->name('agencies.store');
+        Route::get('delete/{id}', 'him_delete_agency')->name('agencies.delete');
     });
 });
-
-
-
-// Route::group(['prefix' => 'agents', 'middleware' => 'auth'], function () {
-//     Route::get('all_agents', [AgentController::class, 'him_agent_index'])->name('agents');
-//     Route::get('create', [AgentController::class, 'him_create_agent'])->name('create_agent');
-// });
-
 
 
 

@@ -88,8 +88,10 @@
                         @endcanany 
                         <button class="btn btn-success" style="color: white; padding: 0px 10px; border-radius: 3px" title="View Agency"><i class="fa fa-eye" style="font-size: 12px"></i></button>
                         @canany(['agency delete', 'manage everything'])
-                        <button class="btn btn-danger" style="color: white; padding: 0px 10px; border-radius: 3px" title="Delete Agency"><i class="fa fa-trash" style="font-size: 12px"></i></button>
-                        @endcanany 
+                       <a href="{{ route('agencies.delete', ['id' => $agence->id]) }}">
+                         <button class="btn btn-danger" style="color: white; padding: 0px 10px; border-radius: 3px" title="Delete Agency"><i class="fa fa-trash" style="font-size: 12px"></i></button>
+                      </a>
+                         @endcanany 
                       </div>
                       </td>
                   </tr>
