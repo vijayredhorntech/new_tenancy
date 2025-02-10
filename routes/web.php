@@ -7,7 +7,7 @@ use App\Http\Controllers\SuperAdmin\AgencyController;
 use App\Http\Controllers\SuperAdmin\SuperadminserviceController;
 use App\Http\Controllers\SuperAdmin\SuperadminController;
 use App\Http\Controllers\SuperAdmin\RoleController;
-
+use App\Http\Controllers\SuperAdmin\PermissionController;
 
 
 /*
@@ -68,10 +68,10 @@ Route::group(['prefix' => 'superadmin', 'middleware' => 'auth'], function () {
 
 
    /*** Route for permissions ***/
-    Route::get('/permission',[RoleController::class, 'hs_roleindex'])->name('superadmin.permission');
-    Route::get('/permissioncreate',[RoleController::class, 'hs_rolecreate'])->name('superadmin_permissioncreate');
-    Route::post('/permissionstore',[RoleController::class, 'hs_rolestore'])->name('superadmin_permissionstore');
-    Route::get('/permissiondelete/{id}',[RoleController::class, 'hs_roledelete'])->name('superadmin_permissiondelete');
+    Route::get('/permission',[PermissionController::class, 'hs_permissionindex'])->name('superadmin.permission');
+    Route::get('/permissioncreate',[PermissionController::class, 'hs_permissioncreate'])->name('superadmin_permissioncreate');
+    Route::post('/permissionstore',[PermissionController::class, 'hs_permissionstore'])->name('superadmin_permissionstore');
+    Route::get('/permissiondelete/{id}',[PermissionController::class, 'hs_permissiondelete'])->name('superadmin_permissiondelete');
 
 
 

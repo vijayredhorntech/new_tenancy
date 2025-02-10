@@ -41,16 +41,7 @@
                                 <div class="text-danger">{{ $message }}</div> @enderror
                             </div>
                         </div>
-                        <!-- <div class="col-md-3">
-                            <div class="mb-3">
-                                <label for="name" class="form-label" style="font-weight: 500; color: black">
-                                    Service Icone </label>
-                                <input type="text" class="form-control" name="icon" value="{{ old('icon') }}"
-                                       placeholder="Enter icone url .....">
-                                @error('icon')
-                                <div class="text-danger">{{ $message }}</div> @enderror
-                            </div>
-                        </div> -->
+    
 
                         <div class="col-md-6">
                             <div class="mb-3">
