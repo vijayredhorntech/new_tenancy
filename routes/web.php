@@ -6,6 +6,9 @@ use App\Http\Controllers\SuperAdmin\AuthController;
 use App\Http\Controllers\SuperAdmin\AgencyController;
 use App\Http\Controllers\SuperAdmin\SuperadminserviceController;
 use App\Http\Controllers\SuperAdmin\SuperadminController;
+use App\Http\Controllers\SuperAdmin\RoleController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -44,8 +47,8 @@ Route::group(['prefix' => 'superadmin', 'middleware' => 'auth'], function () {
     Route::get('/serviceindex', [SuperadminserviceController::class, 'hs_serviceindex'])->name('superadmin_service');
     Route::get('/servicecreate', [SuperadminserviceController::class, 'hs_servicecreate'])->name('superadmin_servicecreate');
     Route::post('/sericestore', [SuperadminserviceController::class, 'hs_servicestore'])->name('superadmin_ servicestore');
-    Route::get('/sericeupdate/{id}',[SuperadminController::class, 'hs_sericeupdate'])->name('superadmin_sericeupdate');
-    Route::delete('/sericedelete',[SuperadminController::class, 'hs_sericecreate'])->name('superadmin_sericedelete');
+    Route::get('/serviceupdate/{id}', [SuperadminserviceController::class, 'hs_serviceupdate'])->name('superadmin_serviceupdate'); // Corrected spelling & added {id}
+    Route::get('/servicedelete/{id}', [SuperadminserviceController::class, 'hs_servicedelete'])->name('superadmin_servicedelete'); 
 
 
      /*** Route for staff ***/
@@ -54,14 +57,21 @@ Route::group(['prefix' => 'superadmin', 'middleware' => 'auth'], function () {
     Route::post('/staffstore',[SuperadminController::class, 'hs_staffstore'])->name('superadmin_staffstore');
     Route::get('/staffupdate/{id}',[SuperadminController::class, 'hs_staff'])->name('superadmin_staffupdate');
     Route::delete('/staffdelete',[SuperadminController::class, 'hs_staffcreate'])->name('superadmin_staffdelete');
-
     Route::get('/staffDetails',[SuperadminController::class, 'hs_staffDetails'])->name('superadmin_staffDetails');
 
 
     /*** Route for Roles ***/
-    Route::get('/roleindex',[SuperadminController::class, 'hs_roleindex'])->name('superadmin.role');
-    Route::get('/rolecreate',[SuperadminController::class, 'hs_rolecreate'])->name('superadmin_rolecreate');
-    Route::post('/rolestore',[SuperadminController::class, 'hs_rolestore'])->name('superadmin_rolestore');
+    Route::get('/roleindex',[RoleController::class, 'hs_roleindex'])->name('superadmin.role');
+    Route::get('/rolecreate',[RoleController::class, 'hs_rolecreate'])->name('superadmin_rolecreate');
+    Route::post('/rolestore',[RoleController::class, 'hs_rolestore'])->name('superadmin_rolestore');
+    Route::get('/roledelete/{id}',[RoleController::class, 'hs_roledelete'])->name('superadmin_roledelete');
+
+
+   /*** Route for permissions ***/
+    Route::get('/permission',[RoleController::class, 'hs_roleindex'])->name('superadmin.permission');
+    Route::get('/permissioncreate',[RoleController::class, 'hs_rolecreate'])->name('superadmin_permissioncreate');
+    Route::post('/permissionstore',[RoleController::class, 'hs_rolestore'])->name('superadmin_permissionstore');
+    Route::get('/permissiondelete/{id}',[RoleController::class, 'hs_roledelete'])->name('superadmin_permissiondelete');
 
 
 

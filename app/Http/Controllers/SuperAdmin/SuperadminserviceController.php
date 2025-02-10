@@ -12,6 +12,8 @@ use App\Models\Service;
 class SuperadminserviceController extends Controller
 {
 
+    
+
     public function hs_serviceindex(){
         
         $id = Auth::user()->id;
@@ -35,7 +37,7 @@ class SuperadminserviceController extends Controller
             {
                 $validated = $request->validate([
                     'service_name' => 'required|string|max:255',
-                    'icon' => 'required',
+                    
                 ]);
 
                 $service = new Service();
@@ -44,13 +46,35 @@ class SuperadminserviceController extends Controller
                 $service->description = $request->description;
 
                 if ($service->save()) {
-                    return redirect()->route('superadmin.staff')->with('success', 'Service created successfully.');
+                    return redirect()->route('superadmin_service')->with('success', 'Service created successfully.');
                 } else {
-                    return redirect()->route('superadmin_servicecreate')->with('error', 'Failed to create service.');
+                    return redirect()->route('superadmin_service')->with('error', 'Failed to create service.');
                 }
             }
 
-          
+    /** Store update **/
+    public function hs_serviceupdate($id)
+        {
+             $service = Service::find($id);
+             $all_service=Service::get();
+            if (!$service) {
+               return redirect()->route('superadmin_service')->with('error', 'Service not found.');
+                }              
+                        return view('auth.admin.pages.service.service_form',['services'=>$all_service,'service'=>$service]);
+                    }
+
+
+        /** Store Delete **/              
+                    public function hs_servicedelete($id)
+                         {
+                            $service = Service::find($id);
+                                if ($service) {
+                                    $service->delete();
+                                    return redirect()->route('superadmin_service')->with('success', 'Service deleted successfully.');
+                                } else {
+                                    return redirect()->route('superadmin_service')->with('error', 'Service not found.');
+                                }}
+           
 
 }
 

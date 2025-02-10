@@ -49,32 +49,6 @@ class SuperadminController extends Controller
         }
     }
 
-    /**** Function for Roles *****/
-
-    public function hs_roleindex(){
-        $id = Auth::user()->id;
-        $user = User::find($id);
-        $alluser=User::get();
-        $service=Service::get();
-        return view('auth.admin.pages.Roles.role', ['user_data' => $user,'services' => $service,'users'=>$alluser]);
-    }
-
-
-
-    public function hs_rolecreate(){
-        $id = Auth::user()->id;
-        $user = User::find($id);
-        $alluser=User::get();
-        $service=Service::get();
-        return view('auth.admin.pages.Roles.role_form', ['user_data' => $user,'services' => $service,'users'=>$alluser]);
-    }
-
-    public function hs_rolestore(Request $request){
-
-        dd($request->all());
-
-    }
-
     public function hs_staffDetails()
     {
         return view('auth.admin.pages.staff.details');

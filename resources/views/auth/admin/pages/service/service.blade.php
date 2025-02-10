@@ -16,8 +16,16 @@
     <div style="width: 100%; padding: 10px 0px">
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
+            
+        @endif
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
         @endif
     </div>
+
+
 
       <div class="page-content">
           <table class="custom_table">
@@ -44,14 +52,15 @@
                       <td>{{$service->description}}</td>              
                       <td>
                       <div style="display: flex; gap: 5px">
-                          <a href="{{route('superadmin_staffupdate', $service->id) }}"><button class="btn btn-info" style="color: white; padding: 0px 10px; border-radius: 3px" title="Edit Agency"><i class="fa fa-pen" style="font-size: 12px"></i></button></a> 
+                          <a href="{{ route('superadmin_serviceupdate', ['id' => $service->id]) }}">
+                            <button class="btn btn-info" style="color: white; padding: 0px 10px; border-radius: 3px" title="Edit Agency"><i class="fa fa-pen" style="font-size: 12px"></i></button></a> 
                           <button class="btn btn-success" style="color: white; padding: 0px 10px; border-radius: 3px" title="View Agency"><i class="fa fa-eye" style="font-size: 12px"></i></button>
-                          <button class="btn btn-danger" style="color: white; padding: 0px 10px; border-radius: 3px" title="Delete Agency"><i class="fa fa-trash" style="font-size: 12px"></i></button>
+                          <a href="{{ route('superadmin_servicedelete', ['id' => $service->id]) }}"> <button class="btn btn-danger" style="color: white; padding: 0px 10px; border-radius: 3px" title="Delete Agency"><i class="fa fa-trash" style="font-size: 12px"></i></button></a>
 
                       </div>
                       </td>
                   </tr>
-                                @endforeach
+                 @endforeach
                              
                     @endif
                

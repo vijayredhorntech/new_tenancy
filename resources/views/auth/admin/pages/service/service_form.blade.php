@@ -1,15 +1,18 @@
 @extends('auth.admin.layout.header')
 @section('title')
-    Create Agency
+    {{ 'Create Service' }}
 @stop
 
 @section('content')
 
+
+  
     <div class="show_table_details">
         <div class="button_area">
-            <span>Create New Service</span>
+        <span>{{ isset($service) ? 'Update Service' : 'Create New Service' }}</span>
+
         </div>
-        <form action="{{ route('superadmin_ servicestore') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ isset($service) ? route('superadmin_serviceupdate', ['id' => $service->id]) : route('superadmin_ servicestore') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             @if(session('success'))
@@ -33,12 +36,12 @@
                             <div class="mb-3">
                                 <label for="logo" class="form-label" style="font-weight: 500; color: black">Serive Name
                                     </label>
-                                <input type="text" class="form-control" name="service_name" value="{{ old('service_name') }}" placeholder="Enter Service name.....">
+                                <input type="text" class="form-control" name="service_name" value="{{ old('service_name', $service->name ?? '') }}" placeholder="Enter Service name.....">
                                 @error('service_name')
                                 <div class="text-danger">{{ $message }}</div> @enderror
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <!-- <div class="col-md-3">
                             <div class="mb-3">
                                 <label for="name" class="form-label" style="font-weight: 500; color: black">
                                     Service Icone </label>
@@ -47,14 +50,14 @@
                                 @error('icon')
                                 <div class="text-danger">{{ $message }}</div> @enderror
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="address" class="form-label" style="font-weight: 500; color: black">Description
                                     Line 1</label>
                                 <textarea class="form-control" name="description" rows="2"
-                                          placeholder="Description .....">{{ old('description') }}</textarea>
+                                          placeholder="Description ....."> {{ isset($service) ? $service->description  :  old('description') }} </textarea>
                                 @error('address')
                                 <div class="text-danger">{{ $message }}</div> @enderror
                             </div>

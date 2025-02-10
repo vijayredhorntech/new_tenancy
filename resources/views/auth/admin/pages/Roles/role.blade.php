@@ -32,7 +32,7 @@
                           <tr>
                               <th scope="col">Sr. No</th>
                               <th scope="col">Role Name</th>
-                              <th scope="col">Role Description</th>
+                              <!-- <th scope="col">Role Description</th> -->
                               <th scope="col">Permissions</th>
                               <th scope="col">Status</th>
                               <th scope="col">Action</th>
@@ -42,11 +42,10 @@
 
 
                           <tbody >
-                          @foreach($users as $user)
+                          @foreach($roles as $role)
                               <tr>
                                   <td>{{$loop->iteration}}</td>
-                                  <td style="font-weight: 500">{{$user->name}}</td>
-                                  <td>{{$user->email}}</td>
+                                  <td style="font-weight: 500">{{$role->name}}</td>
                                   <td>
                                       <button class="btn btn-success" style="color: white; padding: 0px 10px; border-radius: 3px" title="View Agency">4 <i class="fa fa-lock-open" style="font-size: 12px; margin-left: 10px"></i></button>
                                       {{--                                  <button class="btn btn-danger" style="color: white; padding: 0px 10px; border-radius: 3px" title="View Agency">0 <i class="fa fa-lock" style="font-size: 12px; margin-left: 10px"></i></button>--}}
@@ -57,8 +56,8 @@
                                   </td>
                                   <td>
                                       <div style="display: flex; gap: 5px">
-                                          <button class="btn btn-info" style="color: white; padding: 0px 10px; border-radius: 3px" title="Edit Agency"><i class="fa fa-pen" style="font-size: 12px"></i></button>
-                                          <button class="btn btn-danger" style="color: white; padding: 0px 10px; border-radius: 3px" title="Delete Agency"><i class="fa fa-trash" style="font-size: 12px"></i></button>
+                                        <a href="#">  <button class="btn btn-info" style="color: white; padding: 0px 10px; border-radius: 3px" title="Edit Agency"><i class="fa fa-pen" style="font-size: 12px"></i></button></a>
+                                        <a href="{{ route('superadmin_roledelete', ['id' => $role->id]) }}">  <button class="btn btn-danger" style="color: white; padding: 0px 10px; border-radius: 3px" title="Delete Agency"><i class="fa fa-trash" style="font-size: 12px"></i></button></a>
 
                                       </div>
                                   </td>
@@ -88,20 +87,7 @@
                         </thead>
                         <tbody >
 
-                        @php
-                            $permissions = [
-                                 [ 'name' => 'Create Users',
-                                  'status' => 'active'],
-                                 [ 'name' => 'Edit Users',
-                                     'status' => 'inactive'],
-                                     [ 'name' => 'Delete Users',
-                                     'status' => 'active'],
-                                     [ 'name' => 'View Users',
-                                     'status' => 'active'],
-                                     [ 'name' => 'Create Roles',
-                                     'status' => 'active'],
-     ]
-                        @endphp
+              
 
 
                         @forelse ($permissions as $permission)
