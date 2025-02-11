@@ -12,9 +12,8 @@
         <span>{{ isset($service) ? 'Update Service' : 'Create New Service' }}</span>
 
         </div>
-        <form action="{{ isset($service) ? route('superadmin_serviceupdate', ['id' => $service->id]) : route('superadmin_ servicestore') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ isset($service) ? route('serviceupdate_store', ['id' => $service->id]) : route('superadmin_ servicestore') }}" method="POST" enctype="multipart/form-data">
             @csrf
-
             @if(session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
@@ -48,7 +47,8 @@
                                 <label for="address" class="form-label" style="font-weight: 500; color: black">Description
                                     Line 1</label>
                                 <textarea class="form-control" name="description" rows="2"
-                                          placeholder="Description ....."> {{ isset($service) ? $service->description  :  old('description') }} </textarea>
+                                          placeholder="Description ....."> {{ old('description', isset($service->description) ?$service->description : '') }}
+                                      </textarea>
                                 @error('address')
                                 <div class="text-danger">{{ $message }}</div> @enderror
                             </div>
@@ -63,7 +63,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary px-5">Create Agency</button>
+                            <button type="submit" class="btn btn-primary px-5">{{ isset($service) ? 'Update Service' : 'Create Service' }} </button>
                         </div>
                     </div>
 

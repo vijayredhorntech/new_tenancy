@@ -11,12 +11,10 @@
             </span>
         </div>
         <!-- <form action="{{ route('superadmin_staffstore') }}" method="POST" enctype="multipart/form-data"> -->
-        <form action="{{ isset($edit_user) ? route('superadmin_staffupdate',['id' => $edit_user->id]) : route('superadmin_staffstore') }}" method="POST" enctype="multipart/form-data"> 
+        <form action="{{ isset($edit_user) ? route('hs_supdatedstore',['id' => $edit_user->id]) : route('superadmin_staffstore') }}" method="POST" enctype="multipart/form-data"> 
         @csrf
-        @if(isset($edit_user))
-           @method('PUT')
-        @endif
-            @if(session('success'))
+
+        @if(session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
 
@@ -70,7 +68,7 @@
                             <div class="row">
                                 <div class="col-3">
                                     <div class="mb-3">
-                                        <label for="contact_phone" class="form-label"
+                                        <label for="number_code" class="form-label"
                                                style="font-weight: 500; color: black">Code</label>
                                         <select type="text" class="form-control" name="contact_phone">
                                             <option value="+91">+91</option>
@@ -123,9 +121,9 @@
                             <div class="mb-3">
                                 <label for="address" class="form-label" style="font-weight: 500; color: black">Address
                                     Line 2</label>
-                                <textarea class="form-control" name="address" rows="2"
+                                <textarea class="form-control" name="address2" rows="2"
                                           placeholder="Address line 2.....">{{ old('address') }}</textarea>
-                                @error('address')
+                                @error('address2')
                                 <div class="text-danger">{{ $message }}</div> @enderror
                             </div>
                         </div>
@@ -182,8 +180,8 @@
                             <div class="mb-3">
                                 <label for="address" class="form-label" style="font-weight: 500; color: black">Roles
                                     </label>
-                                    <select type="text" class="form-control" name="contact_phone">
-                                            <option value="+91">Select Role</option>
+                                    <select type="text" class="form-control" name="role">
+                                            <option>Select Role</option>
                                             @if(isset($roles))
                                                @foreach($roles as $role)
                                                   <option value="{{$role->name}}">{{$role->name}}</option>

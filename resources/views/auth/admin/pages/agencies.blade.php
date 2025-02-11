@@ -31,7 +31,7 @@
                   <th scope="col">Phone</th>
                   <th scope="col">Contact Person</th>
                   <th scope="col">Domain</th>
-                  <th scope="col">Agents</th>
+                  <th scope="col">Total Service</th>
                   <th scope="col">Clients</th>
                   <th scope="col">Status</th>
                   <th scope="col">Action</th>
@@ -65,12 +65,8 @@
                                 No Domain
                             @endif
                         </td>
-                      <td>
-                          @php
-                            $clients = ['10', '20', '30', '40', '50', '60', '70', '80', '90', '100'];
-                            echo $clients[array_rand($clients)];
-                          @endphp
-                      </td>
+                      <td>{{$agence->userAssignments->count()}}
+                                 </td>
                       <td>
                           @php
                             $clients = ['10', '20', '30', '40', '50', '60', '70', '80', '90', '100'];
@@ -84,7 +80,7 @@
                       <td>
                       <div style="display: flex; gap: 5px">
                         @canany(['agency update', 'manage everything'])
-                            <a href=""> <button class="btn btn-info" style="color: white; padding: 0px 10px; border-radius: 3px" title="Edit Agency"><i class="fa fa-pen" style="font-size: 12px"></i></button> </a>
+                            <a href="{{route('agencies.edit',['id' => $agence->id])}}"> <button class="btn btn-info" style="color: white; padding: 0px 10px; border-radius: 3px" title="Edit Agency"><i class="fa fa-pen" style="font-size: 12px"></i></button> </a>
                         @endcanany 
                         <button class="btn btn-success" style="color: white; padding: 0px 10px; border-radius: 3px" title="View Agency"><i class="fa fa-eye" style="font-size: 12px"></i></button>
                         @canany(['agency delete', 'manage everything'])

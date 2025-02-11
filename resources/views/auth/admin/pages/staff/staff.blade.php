@@ -43,12 +43,13 @@
               <tbody >
               @foreach($users as $user)
                   <tr>
-                      <td>{{$loop->iteration}}</td>
-                      <td>{{$user->name}}</td>
-                      <td>{{$user->email}}</td>
-                      <td>{{$user->phone}}</td>
-                      <td>{{$user->email}}</td>
-                      <td>{{$user->phone}}</td>
+                  <td>{{ $loop->iteration }}</td>
+                    <td>{{ $user->name ?? 'N/A' }}</td>
+                    <td>{{ $user->email ?? 'N/A' }}</td>
+                    <td>{{ $user->userdetails->phone_number ?? 'N/A' }}</td>
+                    <td>{{ $user->roles->isNotEmpty() ? $user->roles->pluck('name')->implode(', ') : 'No Role' }}</td>
+                    <td></td>
+
                       <td>
                           <span class="badge rounded-pill text-bg-success">Active </span>
                           <!-- <span class="badge rounded-pill text-bg-danger">Inactive </span> -->
@@ -61,7 +62,7 @@
                           </a>
                           @endcanany
                           @canany(['view staffdetails', 'manage everything'])
-                          <a href="{{route('superadmin_staffDetails')}}" class="btn btn-success" style="color: white; padding: 0px 10px; border-radius: 3px" title="View Agency"><i class="fa fa-eye" style="font-size: 12px"></i></a>
+                          <a href="{{route('superadmin_staffDetails',['id'=>$user->id])}}" class="btn btn-success" style="color: white; padding: 0px 10px; border-radius: 3px" title="View Agency"><i class="fa fa-eye" style="font-size: 12px"></i></a>
                           @endcanany
                           @canany(['staff delete', 'manage everything'])
                           <a href="{{route('superadmin_staffdelete',['id' => $user->id])}}">

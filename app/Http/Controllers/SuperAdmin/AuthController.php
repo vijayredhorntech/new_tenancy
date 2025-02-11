@@ -43,9 +43,7 @@ class AuthController extends Controller
         $id = Auth::user()->id;
         $user = User::find($id);
         $service=Service::get();
-        // dd($service);
-
-        return view('auth.admin.pages.index', ['user_data' => $user,'services' => $service]);
+         return view('auth.admin.pages.index', ['user_data' => $user,'services' => $service]);
     }
 
 

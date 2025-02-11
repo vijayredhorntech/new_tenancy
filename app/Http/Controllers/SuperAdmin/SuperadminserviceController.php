@@ -57,24 +57,56 @@ class SuperadminserviceController extends Controller
         {
              $service = Service::find($id);
              $all_service=Service::get();
+             $id = Auth::user()->id;
+             $user = User::find($id);
+
             if (!$service) {
                return redirect()->route('superadmin_service')->with('error', 'Service not found.');
                 }              
-                        return view('auth.admin.pages.service.service_form',['services'=>$all_service,'service'=>$service]);
-                    }
+                        return view('auth.admin.pages.service.service_form',['services'=>$all_service,'service'=>$service,'user_data' => $user,]);
+        }
 
 
         /** Store Delete **/              
                     public function hs_servicedelete($id)
                          {
-                            $service = Service::find($id);
-                                if ($service) {
-                                    $service->delete();
-                                    return redirect()->route('superadmin_service')->with('success', 'Service deleted successfully.');
-                                } else {
-                                    return redirect()->route('superadmin_service')->with('error', 'Service not found.');
-                                }}
+                           $service = Service::find($id);
+                           if ($service) {
+                           $service->delete();
+                            return redirect()->route('superadmin_service')->with('success', 'Service deleted successfully.');
+                            } else {
+                             return redirect()->route('superadmin_service')->with('error', 'Service not found.');
+                           }}
+
+        /*** Store update service***/
+
+        public function hs_update_store(Request $request){
+                    $validated = $request->validate([
+                        'service_name' => 'string|max:255',
+                        'description' => 'string',
+                        'id' => 'required|string',
+                       
+                    ]);
+                    
+                    // echo $request->id; 
+                    $service = Service::where('id',$request->id)->first(); 
+                    $service->name = $request->service_name;
+                    // $service->icon = $request->icon; // Corrected from $request->service_name to $request->icon
+                    $service->description = $request->description;
+                    $service->save(); 
+    
+                    if ($service->save()) {
+                        return redirect()->route('superadmin_service')->with('success', 'Service Update successfully.');
+                    } else {
+                        return redirect()->route('superadmin_service')->with('error', 'Failed to create service.');
+                    }
+              
+        
+            dd($request->all());
+        }
            
+
+
 
 }
 

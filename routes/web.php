@@ -50,6 +50,7 @@ Route::group(['prefix' => 'superadmin', 'middleware' => 'auth'], function () {
             Route::post('/sericestore', 'hs_servicestore')->name('superadmin_ servicestore'); // Fixed extra space in name
             Route::get('/servicecreate', 'hs_servicecreate')->middleware('can:service create')->name('superadmin_servicecreate');
             Route::get('/serviceupdate/{id}', 'hs_serviceupdate')->middleware('can:service update')->name('superadmin_serviceupdate');
+            Route::post('/serviceupdate_store', 'hs_update_store')->name('serviceupdate_store');
             Route::get('/servicedelete/{id}', 'hs_servicedelete')->middleware('can:service delete')->name('superadmin_servicedelete');
         });
 
@@ -61,8 +62,9 @@ Route::group(['prefix' => 'superadmin', 'middleware' => 'auth'], function () {
             Route::get('/staffcreate', 'hs_staffcreate')->middleware('can:staff create')->name('superadmin_staffcreate');
             Route::post('/staffstore', 'hs_staffstore')->name('superadmin_staffstore');
             Route::get('/staffupdate/{id}', 'hs_staffupdate')->middleware('can:staff update')->name('superadmin_staffupdate');
+            Route::post('/staffupdate/{id}', 'hs_supdatedstore')->middleware('can:staff update')->name('hs_supdatedstore');
             Route::get('/staffdelete/{id}', 'hs_staffdelete')->middleware('can:staff delete')->name('superadmin_staffdelete'); // Fixed incorrect controller method
-            Route::get('/staffDetails', 'hs_staffDetails')->middleware('can:view staffdetails')->name('superadmin_staffDetails');          
+            Route::get('/staffDetails/{id}', 'hs_staffDetails')->middleware('can:view staffdetails')->name('superadmin_staffDetails');          
         });
 
 
@@ -96,6 +98,8 @@ Route::group(['prefix' => 'agencies', 'middleware' => 'auth'], function () {
         Route::get('all_agencies', 'him_agency_index')->middleware('can:agency view')->name('agencies');
         Route::get('create', 'him_create_agency')->middleware('can:agency create')->name('create_agency');
         Route::post('store', 'him_store_agency')->name('agencies.store');
+        Route::get('edit/{id}', 'him_edit_agency')->name('agencies.edit');
+        Route::post('editstore', 'him_editstore')->name('agencies.editstore');
         Route::get('delete/{id}', 'him_delete_agency')->name('agencies.delete');
     });
 });

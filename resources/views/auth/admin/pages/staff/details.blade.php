@@ -42,8 +42,6 @@
 
     <div class="show_table_details">
 
-
-
         <div class="page-content" style="margin-top: 0px; background-color: whitesmoke">
             <div class="row p-2 px-0" style="background-color: white; border-radius: 3px">
                 <div class="col-sm-6 col-xl-3">
@@ -567,50 +565,51 @@
                 <div class="col-md-3" style="padding: 5px">
                     <div style="width: 100%; padding: 10px; background-color: white">
                         <div>
-                            <img src="{{asset('assets/images/profile.jpg')}}"
-                                 style="width: 100%; height: auto ; object-fit: cover"
-                                 alt="">
+                        <img src="{{ isset($users_detils->profile) ? asset('images/user/profile/' . $users_detils->profile) : asset('assets/images/profile.jpg') }}"
+                            style="width: 100%; height: auto; object-fit: cover"
+                            alt="">
+
                             <div
                                 style="width: 100%; display: flex; justify-content: center; text-align: center; padding: 10px 5px; background-color: rgba(255,165,0,0.27); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px">
-                                <span style="font-weight: bold; color: blue; font-size: 18px">Mr. Nicolas Smith</span>
+                                <span style="font-weight: bold; color: blue; font-size: 18px">{{$users_detils->name}} ({{ $users_detils->roles->isNotEmpty() ? $users_detils->roles->pluck('name')->implode(', ') : 'No Role' }})</span>
                             </div>
                         </div>
 
                         <div id="profileButtonsDiv" style="width: 100%">
-                            <button class="active">Personal Information</button>
-                            <button>Contact Information</button>
-                            <button>Emergency Contact Information</button>
-                            <button>Address Information</button>
-                            <button>Professional Information</button>
-                            <button>Account Information</button>
+                            <button class="tab active" data-info="personal_information">Personal Information</button>
+                            <button class="tab" data-info="contact_information">Contact Information</button>
+                            <button class="tab" data-info="emergency_information">Emergency Contact Information</button>
+                            <button class="tab" data-info="address_information">Address Information</button>
+                            <button class="tab" data-info="professional_information">Professional Information</button>
+                            <button class="tab" data-info="account_information">Account Information</button>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6" style="padding: 5px">
-                    <div style="border-top: 2px solid orange; padding: 10px; background-color: white;">
+               
+
+             <div class="col-md-6" style="padding: 5px" >
+
+
+                    <div style="border-top: 2px solid orange; padding: 10px; background-color: white;" id="personal_information">
                         <div id="personalInfoDiv" style="width: 100%;">
                               <span style="font-weight: bold; color: black; font-size: 18px">Personal Information</span>
                               <div style="width: 100%; overflow-x: auto; margin-top: 10px">
                                   <table style="width: 100%">
                                       <tr style="border-bottom: 1px solid lightgray">
                                           <td style="font-weight: bold; width: 200px; padding: 5px; color: black">Employee ID</td>
-                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>    CLD0215487</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>{{$users_detils->id }}</td>
                                       </tr>
                                       <tr style="border-bottom: 1px solid lightgray">
                                           <td style="font-weight: bold; width: 200px; padding: 5px; color: black">First Name</td>
-                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>    Nicolas</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span> {{$users_detils->name }}</td>
                                       </tr>
                                       <tr style="border-bottom: 1px solid lightgray">
                                           <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Last Name</td>
-                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>    Smith</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>  </td>
                                       </tr>
                                       <tr style="border-bottom: 1px solid lightgray">
                                           <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Father's Name</td>
                                           <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span> James William </td>
-                                      </tr>
-                                      <tr style="border-bottom: 1px solid lightgray">
-                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Mother's Name</td>
-                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span> Allena William </td>
                                       </tr>
                                       <tr style="border-bottom: 1px solid lightgray">
                                           <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Mother's Name</td>
@@ -637,12 +636,8 @@
                                           <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>AB+ </td>
                                       </tr>
                                       <tr style="border-bottom: 1px solid lightgray">
-                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Country</td>
-                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>Indian </td>
-                                      </tr>
-                                      <tr style="border-bottom: 1px solid lightgray">
                                           <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >County</td>
-                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>Gujarat </td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>{{$users_detils->userdetails->country ?? 'N/A' }}</td>
                                       </tr>
                                       <tr style="border-bottom: 1px solid lightgray">
                                           <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Visa</td>
@@ -656,7 +651,231 @@
                               </div>
                         </div>
                     </div>
+
+                    <!-- contact information -->
+                    <div style="border-top: 2px solid orange; padding: 10px; background-color: white; display:none;" id="contact_information">
+                        <div id="personalInfoDiv" style="width: 100%;">
+                              <span style="font-weight: bold; color: black; font-size: 18px">Contact Information</span>
+                              <div style="width: 100%; overflow-x: auto; margin-top: 10px">
+                                  <table style="width: 100%">
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black">Contact Number</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>{{ $user->userdetails->phone_number ?? 'N/A' }}</td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black">Email Id</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span> {{$users_detils->email }}</td>
+                                      </tr>
+                                    </table>
+                              </div>
+                        </div>
+                    </div>
+                     <!-- end contact infoation -->
+
+                      <!-- Emergency information -->
+                    <div style="border-top: 2px solid orange; padding: 10px; background-color: white; display:none;" id="emergency_information">
+                        <div id="personalInfoDiv" style="width: 100%;">
+                              <span style="font-weight: bold; color: black; font-size: 18px">Emergency Contact Information</span>
+                              <div style="width: 100%; overflow-x: auto; margin-top: 10px">
+                                  <table style="width: 100%">
+                                 
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black">Emergency  Name</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span> {{$users_detils->name }}</td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Last Name</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>  </td>
+                                      </tr>
+                      
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Relation With Emergency persion</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span> Allena William </td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Gender</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>Male </td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Date of Birth</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>1998-05-03 </td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Emergency  Contact</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>858080984998 </td>
+                                      </tr>
+                                     
+                                     
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >County</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>{{$users_detils->userdetails->country ?? 'N/A' }}</td>
+                                      </tr>
+                                </table>
+                              </div>
+                        </div>
+                    </div>
+                     <!-- end Emergency infoation -->
+
+                       <!-- Address information -->
+                    <div style="border-top: 2px solid orange; padding: 10px; background-color: white; display:none;" id="address_information">
+                        <div id="personalInfoDiv" style="width: 100%;">
+                              <span style="font-weight: bold; color: black; font-size: 18px">Address Information</span>
+                              <div style="width: 100%; overflow-x: auto; margin-top: 10px">
+                                  <table style="width: 100%">
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black">Address</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>{{$users_detils->id }}</td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black">State</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span> {{$users_detils->name }}</td>
+                                      </tr>
+                                     
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >ZIP code</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span> 173220 </td>
+                                      </tr>
+                                     <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >County</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>{{$users_detils->userdetails->country ?? 'N/A' }}</td>
+                                      </tr>
+                                   
+                                  </table>
+                              </div>
+                        </div>
+                    </div>
+                     <!-- end Address infoation -->
+
+                       <!-- Address information -->
+                    <div style="border-top: 2px solid orange; padding: 10px; background-color: white; display:none;" id="professional_information">
+                        <div id="personalInfoDiv" style="width: 100%;">
+                              <span style="font-weight: bold; color: black; font-size: 18px">Professional Information</span>
+                              <div style="width: 100%; overflow-x: auto; margin-top: 10px">
+                                  <table style="width: 100%">
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black">Employee ID</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>{{$users_detils->id }}</td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black">First Name</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span> {{$users_detils->name }}</td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Last Name</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>  </td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Father's Name</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span> James William </td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Mother's Name</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span> Allena William </td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Gender</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>Male </td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Date of Birth</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>1998-05-03 </td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Marital Status</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>Unmarried </td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Disability</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>N/A </td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Blood Group</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>AB+ </td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >County</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>{{$users_detils->userdetails->country ?? 'N/A' }}</td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Visa</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>BHK No: RT658952 </td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Visa Valid Upto</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>2027-01-14 </td>
+                                      </tr>
+                                  </table>
+                              </div>
+                        </div>
+                    </div>
+                     <!-- end Address infoation -->
+
+                       <!-- Address information -->
+                    <div style="border-top: 2px solid orange; padding: 10px; background-color: white; display:none;" id="account_information">
+                        <div id="personalInfoDiv" style="width: 100%;">
+                              <span style="font-weight: bold; color: black; font-size: 18px">Account Information</span>
+                              <div style="width: 100%; overflow-x: auto; margin-top: 10px">
+                                  <table style="width: 100%">
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black">Employee ID</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>{{$users_detils->id }}</td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black">First Name</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span> {{$users_detils->name }}</td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Last Name</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>  </td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Father's Name</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span> James William </td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Mother's Name</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span> Allena William </td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Gender</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>Male </td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Date of Birth</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>1998-05-03 </td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Marital Status</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>Unmarried </td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Disability</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>N/A </td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Blood Group</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>AB+ </td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >County</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>{{$users_detils->userdetails->country ?? 'N/A' }}</td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Visa</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>BHK No: RT658952 </td>
+                                      </tr>
+                                      <tr style="border-bottom: 1px solid lightgray">
+                                          <td style="font-weight: bold; width: 200px; padding: 5px; color: black" >Visa Valid Upto</td>
+                                          <td style=""><span style="font-weight: bold; color: black">: &nbsp &nbsp</span>2027-01-14 </td>
+                                      </tr>
+                                  </table>
+                              </div>
+                        </div>
+                    </div>
+                     <!-- end Address infoation -->
+                    
                 </div>
+           
                 <div class="col-md-3" style="padding: 5px">
                         <div style=" padding: 10px; background-color: white">
                             <div class="button_area" style="padding: 0px; padding-bottom: 5px">

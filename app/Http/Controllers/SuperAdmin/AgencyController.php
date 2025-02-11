@@ -26,7 +26,8 @@ class AgencyController extends Controller
            
             $id = Auth::user()->id;
             $user = User::find($id);
-            $agency=Agency::with('domains')->get();
+            $agency=Agency::with('domains','userAssignments.service')->get();
+       
             $service=Service::get();
             return view('auth.admin.pages.agencies', ['user_data' => $user,'agencies'=>$agency,'services' => $service]);
 
@@ -40,9 +41,6 @@ class AgencyController extends Controller
         $service=Service::get();
 
         $countries = DatabaseHelper::getCountries();
-    //   dd($countries);
-        // dd($service);
-
         return view('auth.admin.pages.agencies_form', ['user_data' => $user,'services' => $service,'countries'=>$countries]);
     }
 
@@ -76,17 +74,12 @@ class AgencyController extends Controller
                     $profile = "";
 
                     if ($request->hasFile('logo')) {
-                        $file = $request->file('logo'); // Get the uploaded file
-                        $destinationPath = public_path('agencies/logo/');
-                        // Ensure the directory exists
+                        $file = $request->file('logo'); 
+                        $destinationPath = public_path('images/agencies/logo/');
                         if (!File::exists($destinationPath)) {
                             File::makeDirectory($destinationPath, 0755, true, true);
                         }
-                
-                        // Generate a unique file name
                         $fileName = 'profile_' . auth()->id() . '_' . time() . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
-                
-                        // Move the uploaded file
                         $file->move($destinationPath, $fileName);
                         $profile = $fileName;
                     }
@@ -140,18 +133,78 @@ class AgencyController extends Controller
                 
                         // Delete the agency if domain creation fails
                         if (isset($agency)) {
-                            $agency->delete(); // Delete agency if domain creation fails
+                            $agency->delete(); 
                         }
                              return redirect()->back()->withInput()->with('error', 'Failed to create agency and domain: ' . $e->getMessage());
                     }
     }
 
 
-        public function him_delete_agency($id){
+      /*** Function for update****/
+      public function him_edit_agency ($eid){
 
-            dd($id);
+        $id = Auth::user()->id;
+        $user = User::find($id);
+        $service=Service::get();
+        $agency=Agency::with('userAssignments.service')->where('id',$eid)->first();
+        // dd($agency);
 
+         $countries = DatabaseHelper::getCountries();
+    //   dd($countries);
+        // dd($service);
+
+        return view('auth.admin.pages.editagencies_form',[
+         'user_data' => $user,
+         'services' => $service,
+         'countries'=>$countries,
+         'edit_agency'=>$agency
+        ]);
+       
+
+    }
+
+
+/**** Update function for agency *****/
+public function him_editstore(Request $request)
+{
+    \DB::beginTransaction(); // Start transaction
+
+    try {
+        $agency = Agency::where('id', $request->id)->first();
+        
+        if (!$agency) {
+            return response()->json(['error' => 'Agency not found'], 404);
         }
+
+        $agency->name = $request->name;
+        $agency->phone = $request->phone;
+        $agency->address = $request->address;
+        $agency->country = $request->country;
+        $agency->save(); // Save agency details
+
+        // Delete existing service assignments for the agency
+        UserServiceAssignment::where('agency_id', $request->id)->delete();
+
+        // Assign new services if provided
+        if (!empty($request->services) && is_array($request->services)) {
+            $agency_id = $request->id;
+            // dd($agency_id);
+            foreach ($request->services as $service_id) {
+                $serviceassign=new UserServiceAssignment();
+                $serviceassign->agency_id=$agency_id;
+                $serviceassign->service_id=$service_id;
+                $serviceassign->save(); 
+            }
+        }
+
+        \DB::commit(); 
+        return redirect()->route('agencies')->with('success', 'Agency and domain created successfully.');
+    } catch (\Exception $e) {
+        \DB::rollBack(); // Rollback transaction on error
+        return response()->json(['error' => 'Something went wrong', 'message' => $e->getMessage()], 500);
+    }
+}
+
 
     /*****  Route for agency   ***** */
             public function him_agencylogin($domain)
@@ -206,9 +259,16 @@ class AgencyController extends Controller
                                 }
           }
 
-          /** Function for dashboard ****/
+   
+         /*
+          *
+          *
+          * Function for dashboard
+          *
+          *
+          **/
 
-                            public function him_agenciesdashboard(){
+              public function him_agenciesdashboard(){
                                 $id = Auth::user()->id;
                                 // dd($id); 
                                 $userData = \session('user_data');
@@ -222,9 +282,13 @@ class AgencyController extends Controller
                                 // dd($agency);
                             
                                 return view('agencies.admin.pages.index', ['user_data' => $user,'services' => $services]);
-                        }
+                 }
 
+ 
 
+          
+
+/****logout function for agency***** */
                         public function him_agencies_logout(){    
                             $userData = \session('user_data');
                             dd($userData);
@@ -232,6 +296,7 @@ class AgencyController extends Controller
                             $user = User::on('user_database')->where('id', $id)->first();
                             return view('agencies.admin.pages.index', ['user_data' => $user]);
                     }
+    
 
 
             
