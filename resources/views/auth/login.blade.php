@@ -6,13 +6,24 @@
 @section('content')
     <div style="width: 100%; padding: 20px; height: 100vh; width: 100vw; overflow:hidden;  background: linear-gradient(rgba(0,0,0,0.68), rgba(0,0,0,0.5)), url({{asset('assets/images/backgroundImage2.jpg')}}); background-size: cover; background-position: center;">
       <div class="row" style="min-height: 100vh">
+  
             <div class="col-12 h-100 loginFormLeftDiv p-12">
+          
                 <div class="loginFormDiv" >
                     <img src="{{asset('assets/images/logo.png')}}"  alt="Cloud Travels">
                     <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 20px">
                         <h2 style="color: #000; font-size: 25px; font-weight: 600">Welcome to Him soft</h2>
                         <p style="color: #000; font-size: 15px; font-weight: 500">Sign in to continue</p>
+
+                        @if (session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
+
+                        @if (session('error'))
+                            <div class="alert alert-danger">{{ session('error') }}</div>
+                        @endif
                     </div>
+                    
                     <form style="width: 100%" action="{{ route('superadmin_login') }}" method="POST">
                         @csrf
                         <div data-mdb-input-init class="form-outline mb-4">

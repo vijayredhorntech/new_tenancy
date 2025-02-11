@@ -23,6 +23,7 @@ class AuthController extends Controller
     public function superadmin_login(Request $request)
     {
         // Validate input
+        // dd($request->all());
         $validated = $request->validate([
             'email' => 'required|email|exists:users,email',
             'password' => 'required',
@@ -30,9 +31,9 @@ class AuthController extends Controller
 
         // Attempt authentication
         if (Auth::attempt($request->only('email', 'password'))) {
+        
             return redirect("/superadmin/dashboard");
         }
-
         return redirect()->back()->with('error', 'Invalid credentials');
     }
 

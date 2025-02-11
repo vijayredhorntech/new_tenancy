@@ -72,7 +72,7 @@ class SuperadminController extends Controller
                 $user = new User();
                 $user->name = $request->name;
                 $user->email = $request->email;
-                $user->password = Hash::make('default_password'); // Change this to a strong default password or generate one
+                $user->password = Hash::make($request->email); // Change this to a strong default password or generate one
                 $user->profile = $profile;
                 $user->assignRole('simple user');
 
@@ -121,11 +121,21 @@ class SuperadminController extends Controller
     }
 
 /***Update function ***/
-   public function hs_staffupdate($id){
+   public function hs_staffupdate($eid){
    
+    $id = Auth::user()->id;
     $user = User::find($id);
-    return view('auth.admin.pages.staff.staff_form', ['user_data' => $user,'services' => $service,'user'=>$user]);
-    
+    $edit_user = User::with('userdetails')->find($eid);
+    // dd($edit_user);
+    $service=Service::get();
+    $roles = Role::all();
+
+    return view('auth.admin.pages.staff.staff_form', [
+        'user_data' => $user,
+        'services' => $service,
+        'edit_user' => $edit_user,
+        'roles' => $roles
+    ]); 
 
    }
 

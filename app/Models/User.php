@@ -44,4 +44,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    public function userdetails()
+    {
+        return $this->hasOne(UserMeta::class, 'user_id', 'id'); 
+    }
 }
