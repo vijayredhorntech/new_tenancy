@@ -6,6 +6,7 @@
 
 @section('content')
 
+
 <div class="show_table_details">
       <div class="button_area">
           <span >Agencies</span>
@@ -32,7 +33,7 @@
                   <th scope="col">Contact Person</th>
                   <th scope="col">Domain</th>
                   <th scope="col">Total Service</th>
-                  <th scope="col">Clients</th>
+                  <th scope="col">Total Balance</th>
                   <th scope="col">Status</th>
                   <th scope="col">Action</th>
               </tr>
@@ -48,30 +49,22 @@
                       <td>{{$agence->email}}</td>
                       <td>{{$agence->phone}}</td>
                       <td>
-                          <div style="display: flex; flex-direction: column">
-                             <span> {{$agence->contact_person}}</span>
-                              <span>{{$agence->phone}}</span>
-                          </div>
-                      </td>
-
-                      <td>
-                            @if($agence->domains->isNotEmpty())
-                                @foreach($agence->domains as $domain)
-                                
-                                    {{ $domain->full_url }}
-                                   
-                                @endforeach
-                            @else
-                                No Domain
-                            @endif
+                      <div style="display: flex; flex-direction: column">
+                        <span>{{ $agence->contact_person ?? 'N/A' }}</span>
+                        <span>{{ $agence->phone ?? 'N/A' }}</span>
+                    </div>
+                                    
                         </td>
-                      <td>{{$agence->userAssignments->count()}}
+                                
+                      <td>
+                            {{$agence->domains->full_url}}
+                        </td>
+                      <td>{{ $agence->userAssignments ? $agence->userAssignments->count() : 0 }}
                                  </td>
                       <td>
-                          @php
-                            $clients = ['10', '20', '30', '40', '50', '60', '70', '80', '90', '100'];
-                            echo $clients[array_rand($clients)];
-                          @endphp
+                         {{ $agence->balance ? '£ ' . $agence->balance->balance : '0' }}
+
+
                       </td>
                       <td>
                           <span class="badge rounded-pill text-bg-success">Active </span>
@@ -87,7 +80,13 @@
                        <a href="{{ route('agencies.delete', ['id' => $agence->id]) }}">
                          <button class="btn btn-danger" style="color: white; padding: 0px 10px; border-radius: 3px" title="Delete Agency"><i class="fa fa-trash" style="font-size: 12px"></i></button>
                       </a>
-                         @endcanany 
+                       @endcanany 
+
+                       <a href="{{ route('agencies.fund', ['id' => $agence->id]) }}">
+                         <button class="btn btn-primary" style="color: white; padding: 0px 10px; border-radius: 3px" title="Add Fund Agency"><i class="fas fa-money-bill-wave" style="font-size: 12px"></i></button>
+                      </a>
+
+
                       </div>
                       </td>
                   </tr>

@@ -63,7 +63,7 @@ class SuperadminserviceController extends Controller
             if (!$service) {
                return redirect()->route('superadmin_service')->with('error', 'Service not found.');
                 }              
-                        return view('auth.admin.pages.service.service_form',['services'=>$all_service,'service'=>$service,'user_data' => $user,]);
+                        return view('auth.admin.pages.service.service_form',['services'=>$all_service,'service'=>$service,'user_data' => $user]);
         }
 
 
@@ -100,9 +100,16 @@ class SuperadminserviceController extends Controller
                     } else {
                         return redirect()->route('superadmin_service')->with('error', 'Failed to create service.');
                     }
-              
-        
-            dd($request->all());
+      
+        }
+
+        public function hs_flight (Request $request){
+
+            $id = Auth::user()->id;
+            $user = User::find($id);
+            $service=Service::get();
+
+            return view('auth.admin.pages.service.flight',['user_data' => $user,'services' => $service]);
         }
            
 

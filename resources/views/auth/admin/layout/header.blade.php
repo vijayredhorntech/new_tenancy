@@ -8,10 +8,50 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    
     @yield('style')
 
     <!-- Favicon -->
    @include('auth.admin.layout.link')
+
+   <style>
+
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+
+        .dropdown-option {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 2.5rem;
+            padding-right: 2.5rem;
+            border-top: 1px solid #f3f4f6;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .dropdown-option:hover {
+            background-color: rgba(255, 66, 22, 0.13);
+            border-bottom:1px solid #ff4216;
+            border-top:1px solid #ff4216;
+            cursor: pointer;
+            transition: all 0.6s;
+        }
+
+         input[type="date"]::-webkit-inner-spin-button,
+         input[type="date"]::-webkit-calendar-picker-indicator {
+             display: none !important;
+             -webkit-appearance: none !important;
+         }
+        select {
+            -webkit-appearance: none !important; /* Hides the arrow in WebKit-based browsers (Chrome, Safari, Edge) */
+            -moz-appearance: none !important;    /* Hides the arrow in Firefox */
+            appearance: none !important;         /* Standard property */
+            background: #f3f4f6 !important ;         /* Removes background if needed */
+        }
+    </style>
 
 </head>
 <body>
@@ -31,6 +71,7 @@
     </div>
     @yield('admin_script')
     <!-- JavaScript Libraries -->
+
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/admin/lib/chart/chart.min.js"></script>

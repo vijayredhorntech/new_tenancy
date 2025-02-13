@@ -8,7 +8,7 @@ use App\Http\Controllers\SuperAdmin\SuperadminserviceController;
 use App\Http\Controllers\SuperAdmin\SuperadminController;
 use App\Http\Controllers\SuperAdmin\RoleController;
 use App\Http\Controllers\SuperAdmin\PermissionController;
-
+use App\Http\Controllers\SuperAdmin\FundManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +52,10 @@ Route::group(['prefix' => 'superadmin', 'middleware' => 'auth'], function () {
             Route::get('/serviceupdate/{id}', 'hs_serviceupdate')->middleware('can:service update')->name('superadmin_serviceupdate');
             Route::post('/serviceupdate_store', 'hs_update_store')->name('serviceupdate_store');
             Route::get('/servicedelete/{id}', 'hs_servicedelete')->middleware('can:service delete')->name('superadmin_servicedelete');
+            Route::get('/flight', 'hs_flight')->name('flight');
+            Route::get('/hotel', 'hs_flight')->name('hotel');
+            Route::get('/visa', 'hs_flight')->name('visa');
+            Route::get('/test/service', 'hs_flight')->name('test service');
         });
 
 
@@ -101,8 +105,17 @@ Route::group(['prefix' => 'agencies', 'middleware' => 'auth'], function () {
         Route::get('edit/{id}', 'him_edit_agency')->name('agencies.edit');
         Route::post('editstore', 'him_editstore')->name('agencies.editstore');
         Route::get('delete/{id}', 'him_delete_agency')->name('agencies.delete');
+
     });
+
+    // Fund Management
+        Route::controller(FundManagementController::class)->group(function () {
+            Route::get('fund/{id}', 'him_addfund_agency')->name('agencies.fund');
+            Route::post('storefund', 'him_storefund')->name('agencies.fund.store');
+        });
 });
+
+
 
 
 

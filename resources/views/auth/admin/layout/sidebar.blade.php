@@ -20,7 +20,7 @@
                  <!-- Code for service  -->
                 @if(isset($services) && $services->isNotEmpty())
                                 @foreach($services as $service)
-                                <a href="#" class="dropdown-item"> {!! $service->icon !!} {{$service->name}} </a>
+                                <a href="{{ route(Str::lower($service->name)) }}" class="dropdown-item"> {!! $service->icon !!} {{$service->name}} </a>
                                 @endforeach
                                 <a href="{{route('superadmin_service')}}" class="dropdown-item"> -- Other Service </a>
                     @endif

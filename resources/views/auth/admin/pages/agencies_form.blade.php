@@ -149,7 +149,34 @@
                         <span style="font-weight: 500; color: var(--primary) ; font-size: 20px">Address Details of Agency</span>
                     </div>
 
+                    <div class="col-md-3">
+                            <div class="mb-3">
+                                <label for="zipcode" class="form-label" style="font-weight: 500; color: black">Zip
+                                    Code</label>
+                                <input class="form-control" id="postcode" name="zipcode" rows="2" placeholder="Zip Code....."/>
+                                <button id="search">Search</button>
+                                @error('address')
+                                <div class="text-danger">{{ $message }}</div> @enderror
+                            </div>
+                        </div>
+
+                    
+
+
+
                     <div class="row" style="margin-top: 10px">
+
+
+                    <div class="mb-3">
+                                <label for="zipcode" class="form-label" style="font-weight: 500; color: black">
+                                    Address</label>
+                              
+                       <select id="addressDropdown" type="text" class="form-control" name="contact_phone">
+                            <option value="">Select an Address</option>
+                        </select>
+                    </div>
+
+
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="address" class="form-label" style="font-weight: 500; color: black">Address
@@ -170,20 +197,22 @@
                                 <div class="text-danger">{{ $message }}</div> @enderror
                             </div>
                         </div>
+
                         <div class="col-md-3">
                             <div class="mb-3">
                                 <label for="city" class="form-label"
                                        style="font-weight: 500; color: black">City</label>
-                                <input class="form-control" name="city" rows="2" placeholder="City....."/>
+                                <input class="form-control" name="city" rows="2" placeholder="City....." id="city">
                                 @error('address')
                                 <div class="text-danger">{{ $message }}</div> @enderror
                             </div>
                         </div>
+
                         <div class="col-md-3">
                             <div class="mb-3">
                                 <label for="state" class="form-label"
                                        style="font-weight: 500; color: black">State</label>
-                                <input class="form-control" name="state" rows="2" placeholder="State....."/>
+                                <input class="form-control" name="state" rows="2" placeholder="State....." id="state"/>
                                 @error('address')
                                 <div class="text-danger">{{ $message }}</div> @enderror
                             </div>
@@ -192,7 +221,7 @@
                             <div class="mb-3">
                                 <label for="zipcode" class="form-label" style="font-weight: 500; color: black">Zip
                                     Code</label>
-                                <input class="form-control" name="zipcode" rows="2" placeholder="Zip Code....."/>
+                                <input class="form-control" name="zipcode" rows="2" placeholder="Zip Code....." id="zipcode"/>
                                 @error('address')
                                 <div class="text-danger">{{ $message }}</div> @enderror
                             </div>
@@ -201,7 +230,7 @@
                             <div class="mb-3">
                                 <label for="country" class="form-label"
                                        style="font-weight: 500; color: black">Country</label>
-                                <input class="form-control" name="country" rows="2" placeholder="Country....."/>
+                                <input class="form-control" name="country" rows="2" placeholder="Country....." id="country"/>
                                 @error('country')
                                 <div class="text-danger">{{ $message }}</div> @enderror
                             </div>
@@ -295,5 +324,5 @@
             </div>
         </form>
     </div>
-
+        
 @stop

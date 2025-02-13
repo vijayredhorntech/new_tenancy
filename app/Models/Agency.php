@@ -34,12 +34,18 @@ class Agency extends Model
     
        public function domains()
         {
-            return $this->hasMany(Domain::class);
+            return $this->hasOne(Domain::class);
         }
+
 
          public function userAssignments()
             {
                 return $this->hasMany(UserServiceAssignment::class, 'agency_id');
             }
+
+
+        public function balance(){
+                 return $this->hasOne(Balance::class, 'agency_id');
+        }
 
 }

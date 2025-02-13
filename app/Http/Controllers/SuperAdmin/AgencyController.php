@@ -26,8 +26,7 @@ class AgencyController extends Controller
            
             $id = Auth::user()->id;
             $user = User::find($id);
-            $agency=Agency::with('domains','userAssignments.service')->get();
-       
+            $agency=Agency::with('domains','userAssignments.service','balance')->get();     
             $service=Service::get();
             return view('auth.admin.pages.agencies', ['user_data' => $user,'agencies'=>$agency,'services' => $service]);
 
@@ -56,12 +55,12 @@ class AgencyController extends Controller
                         'name' => 'required|string|max:255',
                         'email' => 'required|email|unique:agencies,email',
                         'phone' => 'required|string',
-                        'domain' => 'required|string|max:255|unique:domains,domain_name',
-                        'database' => 'required|string|max:255|unique:agencies,database_name',
-                        'contact_person' => 'nullable|string|max:255',
-                        'contact_phone' => 'nullable|string|max:20',
+                        'domain' => 'required|string|unique:domains,domain_name',
+                        'database' => 'required|string|unique:agencies,database_name',
+                        'contact_person' => 'nullable|string',
+                        'contact_phone' => 'nullable|string',
                         'address' => 'nullable|string',
-                        'country' => 'required|string|max:255',
+                        'country' => 'required|string',
                     ]);
                 
                     // Get the authenticated user's ID
@@ -204,6 +203,9 @@ public function him_editstore(Request $request)
         return response()->json(['error' => 'Something went wrong', 'message' => $e->getMessage()], 500);
     }
 }
+
+
+
 
 
     /*****  Route for agency   ***** */

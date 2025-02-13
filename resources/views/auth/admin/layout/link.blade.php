@@ -16,6 +16,8 @@
 {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"> --}}
 
 
+
+
 <!-- Customized Bootstrap Stylesheet -->
 <link href="/admin/css/bootstrap.min.css" rel="stylesheet">
 
@@ -24,5 +26,31 @@
 
 <!-- KST -->
 <link href="/admin/css/admin_custom.css" rel="stylesheet">
+
+
+<script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          primaryColor: '#3abff8',
+          primaryDarkColor: '#1e7ebc',
+          whiteColor: '#ffffff',
+          blackColor: '#000000',
+          redColor: '#ff0000',
+          primary: '#26ace2',
+          secondary: '#ff4216',
+          ternary: '#172432',
+          white: '#ffffff',
+          black: '#000000',
+          danger: '#ff0000',
+          success: '#00ff00',
+          warning: '#ffcc00',
+        },
+      },
+    },
+  }
+</script>
 
 
